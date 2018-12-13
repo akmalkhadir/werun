@@ -1,7 +1,9 @@
 import React, { Component } from 'react'
 import TopBar from './TopBar'
 import { CssBaseline } from '@material-ui/core'
-import BottomBar from './BottomBar';
+import BottomBar from './BottomBar'
+import HomeTabs from './HomeTabs'
+import './App.css'
 
 class App extends Component {
   render () {
@@ -9,6 +11,9 @@ class App extends Component {
       <>
         <CssBaseline />
         <TopBar />
+        <div className='content_container'>
+          <HomeTabs />
+        </div>
         <BottomBar />
       </>
     )

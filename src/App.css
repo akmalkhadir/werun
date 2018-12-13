@@ -1,11 +1,13 @@
 .content_container {
   height: 100vh;
-  padding: 56px 10px 66px;
+  padding: 56px 0 66px;
   overflow: scroll;
 }
 
+/*
 .MuiBottomNavigation-root-76.bottom_nav {
     position: fixed;
     bottom: 0;
     width: 100%;
 }
+*/

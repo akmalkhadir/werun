@@ -1,28 +1,16 @@
 import React from 'react'
-import { AppBar, Toolbar, Typography, withStyles } from '@material-ui/core'
+import { AppBar, Toolbar, Typography } from '@material-ui/core'
 
-const styles = {
-  root: {
-    flexGrow: 1
-  }
-}
-const TopBar = (props) => {
-  const { classes } = props
+const TopBar = props => {
   return (
-    <div className={classes.root}>
-      <AppBar>
-        <Toolbar>
-          <Typography variant='h6' color='inherit'>
-            TopBar
-          </Typography>
-        </Toolbar>
-      </AppBar>
-    </div>
+    <AppBar>
+      <Toolbar>
+        <Typography variant='h6' color='inherit'>
+          TopBar
+        </Typography>
+      </Toolbar>
+    </AppBar>
   )
 }
 
-export default withStyles(styles)(TopBar)
-
-//    position: fixed;
-// bottom: 0;
-// width: 100 %;
+export default TopBar

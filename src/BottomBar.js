@@ -1,5 +1,9 @@
 import React, { Component } from 'react'
-import { BottomNavigation, BottomNavigationAction, withStyles } from '@material-ui/core'
+import {
+  BottomNavigation,
+  BottomNavigationAction,
+  withStyles
+} from '@material-ui/core'
 import { Event, People, Person } from '@material-ui/icons'
 
 const styles = {
@@ -9,7 +13,6 @@ const styles = {
     width: '100%'
   }
 }
-
 
 class BottomBar extends Component {
   state = {
@@ -28,7 +31,7 @@ class BottomBar extends Component {
       <BottomNavigation
         value={value}
         onChange={this.handleChange}
-        className = {classes.root}
+        className={classes.root}
         showLabels
       >
         <BottomNavigationAction label='Runs' icon={<Event />} />
