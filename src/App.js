@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
-import './App.css'
 import TopBar from './TopBar'
 import { CssBaseline } from '@material-ui/core'
+import BottomBar from './BottomBar';
 
 class App extends Component {
   render () {
@@ -9,6 +9,7 @@ class App extends Component {
       <>
         <CssBaseline />
         <TopBar />
+        <BottomBar />
       </>
     )
   }
