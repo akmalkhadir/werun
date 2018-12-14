@@ -8,6 +8,7 @@ import RunDetails from './Components/RunDetails'
 
 import HomeTabs from './Containers/HomeTabs'
 import RunsContainer from './Containers/RunsContainer'
+import RunForm from './Containers/RunForm'
 
 import './App.css'
 
@@ -21,7 +22,9 @@ class App extends Component {
           <Switch>
             <Route exact path='/users/:id' component={HomeTabs} />
             <Route exact path='/runs' component={RunsContainer} />
+            <Route exact path='/runs/new' component={RunForm} />
             <Route exact path='/runs/:id' component={RunDetails} />
+
           </Switch>
         </div>
         <BottomBar />
