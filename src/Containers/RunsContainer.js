@@ -1,15 +1,12 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import RunCard from './RunCard'
+import RunCard from '../Components/RunCard'
 import { Grid } from '@material-ui/core'
 
 function RunsContainer ({ children, dir }) {
   return (
     <>
       <Grid container spacing={16}>
-        <Grid item>
-          <RunCard />
-        </Grid>
         <Grid item>
           <RunCard />
         </Grid>

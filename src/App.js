@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
-import TopBar from './TopBar'
+import TopBar from './Components/TopBar'
 import { CssBaseline } from '@material-ui/core'
-import BottomBar from './BottomBar'
-import HomeTabs from './HomeTabs'
+import BottomBar from './Components/BottomBar'
+import HomeTabs from './Components/HomeTabs'
 import './App.css'
 
 class App extends Component {
