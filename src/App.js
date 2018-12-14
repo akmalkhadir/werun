@@ -1,10 +1,13 @@
 import React, { Component } from 'react'
-import TopBar from './Components/TopBar'
 import { CssBaseline } from '@material-ui/core'
-import BottomBar from './Components/BottomBar'
-import HomeTabs from './Components/HomeTabs'
+import { Switch, Route } from 'react-router-dom'
 
-import { BrowserRouter as Switch, Route } from 'react-router-dom'
+import TopBar from './Components/TopBar'
+import BottomBar from './Components/BottomBar'
+import RunDetails from './Components/RunDetails'
+
+import HomeTabs from './Containers/HomeTabs'
+import RunsContainer from './Containers/RunsContainer'
 
 import './App.css'
 
@@ -16,7 +19,9 @@ class App extends Component {
         <TopBar />
         <div className='content_container'>
           <Switch>
-            <Route path='/users/:id' component={HomeTabs} />
+            <Route exact path='/users/:id' component={HomeTabs} />
+            <Route exact path='/runs' component={RunsContainer} />
+            <Route exact path='/runs/:id' component={RunDetails} />
           </Switch>
         </div>
         <BottomBar />

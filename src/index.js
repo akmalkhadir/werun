@@ -1,6 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import App from './App'
+// import App from './App'
 import { createStore } from 'redux'
 import Root from './Components/Root'
 import runApp from './reducers'
