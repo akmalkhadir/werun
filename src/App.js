@@ -1,28 +1,36 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from 'react'
+import { CssBaseline } from '@material-ui/core'
+import { Switch, Route } from 'react-router-dom'
+
+import TopBar from './Components/TopBar'
+import BottomBar from './Components/BottomBar'
+import RunDetails from './Components/RunDetails'
+
+import HomeTabs from './Containers/HomeTabs'
+import RunsContainer from './Containers/RunsContainer'
+import RunForm from './Containers/RunForm'
+
+import './App.css'
 
 class App extends Component {
-  render() {
+  render () {
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
-      </div>
-    );
+      <>
+        <CssBaseline />
+        <TopBar />
+        <div className='content_container'>
+          <Switch>
+            <Route exact path='/users/:id' component={HomeTabs} />
+            <Route exact path='/runs' component={RunsContainer} />
+            <Route exact path='/runs/new' component={RunForm} />
+            <Route exact path='/runs/:id' component={RunDetails} />
+
+          </Switch>
+        </div>
+        <BottomBar />
+      </>
+    )
   }
 }
 
-export default App;
+export default App
