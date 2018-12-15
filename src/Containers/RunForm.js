@@ -1,8 +1,7 @@
 import React, { Component } from 'react'
 import { withStyles } from '@material-ui/core/styles'
-import { TextField, Grid } from '@material-ui/core'
+import { TextField, Grid, Button, Switch, Typography } from '@material-ui/core'
 import {
-  Person,
   AccountCircle,
   Description,
   CalendarToday,
@@ -21,6 +20,9 @@ const styles = theme => ({
     marginLeft: theme.spacing.unit,
     marginRight: theme.spacing.unit
   },
+  button: {
+    justifyContent: 'flex-start'
+  },
   dense: {
     marginTop: 16
   },
@@ -36,7 +38,8 @@ class CreateRunForm extends Component {
     start: ``,
     end: ``,
     date: ``,
-    distance: ``
+    distance: ``,
+    private: false
   }
 
   handleChange = name => event => {
@@ -47,6 +50,10 @@ class CreateRunForm extends Component {
 
   handleDateChange = date => {
     this.setState({ selectedDate: date })
+  }
+
+  handleToggleChange = name => event => {
+    this.setState({ [name]: event.target.checked })
   }
 
   render () {
@@ -148,6 +155,25 @@ class CreateRunForm extends Component {
               margin='normal'
               variant='filled'
             />
+          </Grid>
+        </Grid>
+        <Grid container spacing={0} alignItems='center'>
+          <Grid item>
+            <Typography>Mark as Private?</Typography>
+          </Grid>
+          <Grid item>
+            <Switch
+              checked={this.state.private}
+              onChange={this.handleToggleChange('private')}
+              value='private'
+            />
+          </Grid>
+        </Grid>
+        <Grid container className={classes.button}>
+          <Grid item>
+            <Button size='large' variant='contained' color='primary'>
+              CREATE RUN
+            </Button>
           </Grid>
         </Grid>
       </form>
