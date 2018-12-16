@@ -9,8 +9,8 @@ import {
   LocationOn,
   CompareArrows
 } from '@material-ui/icons'
-import { MuiPickersUtilsProvider, DateTimePicker } from 'material-ui-pickers';
-import DateFnsUtils from '@date-io/date-fns';
+import { MuiPickersUtilsProvider, DateTimePicker } from 'material-ui-pickers'
+import DateFnsUtils from '@date-io/date-fns'
 
 const styles = theme => ({
   container: {
@@ -105,6 +105,7 @@ class CreateRunForm extends Component {
               <DateTimePicker
                 variant='filled'
                 label='Date'
+                format='d MMM yyyy | h:mm aa'
                 className={classes.textField}
                 value={date}
                 onChange={this.handleDateChange}

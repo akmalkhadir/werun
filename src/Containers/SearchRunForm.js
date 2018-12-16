@@ -77,6 +77,7 @@ class CreateRunForm extends Component {
               <DateTimePicker
                 variant='filled'
                 label='Date'
+                format = 'd MMM yyyy | h:mm aa'
                 className={classes.textField}
                 value={date}
                 onChange={this.handleDateChange}
