@@ -1,11 +1,13 @@
 import React, { Component } from 'react'
 import { withStyles } from '@material-ui/core/styles'
 import { TextField, Grid, Button } from '@material-ui/core'
+import { CalendarToday, CompareArrows, Search } from '@material-ui/icons'
+
+import DateFnsUtils from '@date-io/date-fns'
 import {
-  CalendarToday,
-  CompareArrows,
-  Search
-} from '@material-ui/icons'
+  MuiPickersUtilsProvider,
+  DateTimePicker
+} from 'material-ui-pickers'
 
 const styles = theme => ({
   container: {
@@ -18,7 +20,7 @@ const styles = theme => ({
     marginRight: theme.spacing.unit
   },
   button: {
-    justifyContent: 'flex-start',
+    justifyContent: 'flex-start'
   },
   dense: {
     marginTop: 16
@@ -31,8 +33,8 @@ const styles = theme => ({
 class CreateRunForm extends Component {
   state = {
     searchTerm: ``,
-    date: ``,
-    distance: ``,
+    date: new Date(),
+    distance: ``
   }
 
   handleChange = name => event => {
@@ -42,15 +44,12 @@ class CreateRunForm extends Component {
   }
 
   handleDateChange = date => {
-    this.setState({ selectedDate: date })
-  }
-
-  handleToggleChange = name => event => {
-    this.setState({ [name]: event.target.checked })
+    this.setState({ date })
   }
 
   render () {
     const { classes } = this.props
+    const { date } = this.state
     return (
       <form className={classes.container} noValidate autoComplete='off'>
         <Grid container spacing={0} alignItems='center'>
@@ -74,15 +73,15 @@ class CreateRunForm extends Component {
             <CalendarToday fontSize='large' color='action' />
           </Grid>
           <Grid item>
-            <TextField
-              id='date'
-              label='Date'
-              className={classes.textField}
-              value={this.state.date}
-              onChange={this.handleChange('date')}
-              margin='normal'
-              variant='filled'
-            />
+            <MuiPickersUtilsProvider utils={DateFnsUtils}>
+              <DateTimePicker
+                variant='filled'
+                label='Date'
+                className={classes.textField}
+                value={date}
+                onChange={this.handleDateChange}
+              />
+            </MuiPickersUtilsProvider>
           </Grid>
         </Grid>
         <Grid container spacing={0} alignItems='center'>
