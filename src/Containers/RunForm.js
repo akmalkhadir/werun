@@ -9,6 +9,8 @@ import {
   LocationOn,
   CompareArrows
 } from '@material-ui/icons'
+import { MuiPickersUtilsProvider, DateTimePicker } from 'material-ui-pickers';
+import DateFnsUtils from '@date-io/date-fns';
 
 const styles = theme => ({
   container: {
@@ -37,7 +39,7 @@ class CreateRunForm extends Component {
     description: ``,
     start: ``,
     end: ``,
-    date: ``,
+    date: new Date(),
     distance: ``,
     private: false
   }
@@ -49,7 +51,7 @@ class CreateRunForm extends Component {
   }
 
   handleDateChange = date => {
-    this.setState({ selectedDate: date })
+    this.setState({ date })
   }
 
   handleToggleChange = name => event => {
@@ -58,6 +60,7 @@ class CreateRunForm extends Component {
 
   render () {
     const { classes } = this.props
+    const { date } = this.state
     return (
       <form className={classes.container} noValidate autoComplete='off'>
         <Grid container spacing={0} alignItems='center'>
@@ -98,15 +101,15 @@ class CreateRunForm extends Component {
             <CalendarToday fontSize='large' color='action' />
           </Grid>
           <Grid item>
-            <TextField
-              id='date'
-              label='Date'
-              className={classes.textField}
-              value={this.state.date}
-              onChange={this.handleChange('date')}
-              margin='normal'
-              variant='filled'
-            />
+            <MuiPickersUtilsProvider utils={DateFnsUtils}>
+              <DateTimePicker
+                variant='filled'
+                label='Date'
+                className={classes.textField}
+                value={date}
+                onChange={this.handleDateChange}
+              />
+            </MuiPickersUtilsProvider>
           </Grid>
         </Grid>
         <Grid container spacing={0} alignItems='center'>
