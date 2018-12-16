@@ -14,6 +14,12 @@ import SearchRunForm from './Containers/SearchRunForm'
 import './App.css'
 
 class App extends Component {
+
+  state = {
+    runs: [],
+    currentUserId: 1
+  }
+
   render () {
     return (
       <>
@@ -29,7 +35,7 @@ class App extends Component {
 
           </Switch>
         </div>
-        <BottomBar />
+        <BottomBar/>
       </>
     )
   }
