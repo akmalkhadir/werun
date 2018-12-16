@@ -18,7 +18,7 @@ class App extends Component {
     return (
       <>
         <CssBaseline />
-        <TopBar />
+        <TopBar position='fixed' />
         <div className='content_container'>
           <Switch>
             <Route exact path='/users/:id' component={HomeTabs} />
