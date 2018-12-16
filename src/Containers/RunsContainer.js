@@ -4,14 +4,14 @@ import { Grid, withStyles } from '@material-ui/core'
 
 const styles = theme => ({
   root: {
-    flexGrow: 1
+    flexGrow: 1,
+    padding: 8 * 3
   }
 })
 
-
-function RunsContainer ({ classes }) {
+function RunsContainer ({ classes, children, dir }) {
   return (
-    <div className={classes.root}>
+    <div component='div' dir={dir} className={classes.root}>
       <Grid container spacing={16}>
         <Grid item>
           <RunCard />
@@ -26,6 +26,5 @@ function RunsContainer ({ classes }) {
     </div>
   )
 }
-
 
 export default withStyles(styles)(RunsContainer)
