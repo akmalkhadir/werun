@@ -1,8 +1,7 @@
 import React, { Component } from 'react'
 import { withStyles } from '@material-ui/core/styles'
-import { TextField, Grid } from '@material-ui/core'
+import { TextField, Grid, Button, Switch, Typography } from '@material-ui/core'
 import {
-  Person,
   AccountCircle,
   Description,
   CalendarToday,
@@ -10,6 +9,8 @@ import {
   LocationOn,
   CompareArrows
 } from '@material-ui/icons'
+import { MuiPickersUtilsProvider, DateTimePicker } from 'material-ui-pickers';
+import DateFnsUtils from '@date-io/date-fns';
 
 const styles = theme => ({
   container: {
@@ -20,6 +21,9 @@ const styles = theme => ({
   textField: {
     marginLeft: theme.spacing.unit,
     marginRight: theme.spacing.unit
+  },
+  button: {
+    justifyContent: 'flex-start'
   },
   dense: {
     marginTop: 16
@@ -35,8 +39,9 @@ class CreateRunForm extends Component {
     description: ``,
     start: ``,
     end: ``,
-    date: ``,
-    distance: ``
+    date: new Date(),
+    distance: ``,
+    private: false
   }
 
   handleChange = name => event => {
@@ -46,11 +51,16 @@ class CreateRunForm extends Component {
   }
 
   handleDateChange = date => {
-    this.setState({ selectedDate: date })
+    this.setState({ date })
+  }
+
+  handleToggleChange = name => event => {
+    this.setState({ [name]: event.target.checked })
   }
 
   render () {
     const { classes } = this.props
+    const { date } = this.state
     return (
       <form className={classes.container} noValidate autoComplete='off'>
         <Grid container spacing={0} alignItems='center'>
@@ -91,15 +101,15 @@ class CreateRunForm extends Component {
             <CalendarToday fontSize='large' color='action' />
           </Grid>
           <Grid item>
-            <TextField
-              id='date'
-              label='Date'
-              className={classes.textField}
-              value={this.state.date}
-              onChange={this.handleChange('date')}
-              margin='normal'
-              variant='filled'
-            />
+            <MuiPickersUtilsProvider utils={DateFnsUtils}>
+              <DateTimePicker
+                variant='filled'
+                label='Date'
+                className={classes.textField}
+                value={date}
+                onChange={this.handleDateChange}
+              />
+            </MuiPickersUtilsProvider>
           </Grid>
         </Grid>
         <Grid container spacing={0} alignItems='center'>
@@ -148,6 +158,25 @@ class CreateRunForm extends Component {
               margin='normal'
               variant='filled'
             />
+          </Grid>
+        </Grid>
+        <Grid container spacing={0} alignItems='center'>
+          <Grid item>
+            <Typography>Mark as Private?</Typography>
+          </Grid>
+          <Grid item>
+            <Switch
+              checked={this.state.private}
+              onChange={this.handleToggleChange('private')}
+              value='private'
+            />
+          </Grid>
+        </Grid>
+        <Grid container className={classes.button}>
+          <Grid item>
+            <Button size='large' variant='contained' color='primary'>
+              CREATE RUN
+            </Button>
           </Grid>
         </Grid>
       </form>

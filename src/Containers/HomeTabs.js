@@ -6,10 +6,11 @@ import AppBar from '@material-ui/core/AppBar'
 import Tabs from '@material-ui/core/Tabs'
 import Tab from '@material-ui/core/Tab'
 import RunsContainer from './RunsContainer'
+import CreateJoinFab from '../Components/CreateJoinFab'
 
 const styles = theme => ({
   root: {
-    backgroundColor: theme.palette.background.paper,
+    backgroundColor: theme.palette.background.paper
   }
 })
 
@@ -50,7 +51,9 @@ class FullWidthTabs extends React.Component {
         >
           <RunsContainer dir={theme.direction}>Upcoming Runs</RunsContainer>
           <RunsContainer dir={theme.direction}>Past Runs</RunsContainer>
+         
         </SwipeableViews>
+        <CreateJoinFab />
       </div>
     )
   }
