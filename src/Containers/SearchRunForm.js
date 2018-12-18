@@ -4,10 +4,7 @@ import { TextField, Grid, Button } from '@material-ui/core'
 import { CalendarToday, CompareArrows, Search } from '@material-ui/icons'
 
 import DateFnsUtils from '@date-io/date-fns'
-import {
-  MuiPickersUtilsProvider,
-  DateTimePicker
-} from 'material-ui-pickers'
+import { MuiPickersUtilsProvider, DateTimePicker } from 'material-ui-pickers'
 
 const styles = theme => ({
   container: {
@@ -77,7 +74,7 @@ class CreateRunForm extends Component {
               <DateTimePicker
                 variant='filled'
                 label='Date'
-                format = 'd MMM yyyy | h:mm aa'
+                format='d MMM yyyy | h:mm aa'
                 className={classes.textField}
                 value={date}
                 onChange={this.handleDateChange}
@@ -105,6 +102,11 @@ class CreateRunForm extends Component {
           <Grid item>
             <Button fullWidth size='large' variant='contained' color='primary'>
               SEARCH
+            </Button>
+          </Grid>
+          <Grid item>
+            <Button fullWidth size='large' variant='contained' color='primary'>
+              VIEW ALL RUNS
             </Button>
           </Grid>
         </Grid>
