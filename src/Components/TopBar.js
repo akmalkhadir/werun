@@ -17,13 +17,30 @@ const styles = theme => ({
   }
 })
 
+const topBarTitle = () => {
+  let currentUrl = window.location.pathname
+  if (currentUrl.includes('/runners/')) {
+    return 'My Runs'
+  } else if (currentUrl === '/runs') {
+    return 'Join A Run'
+  } else if (currentUrl === '/runs/new') {
+    return 'Host A Run'
+  } else if (currentUrl === '/runs/search') {
+    return 'Join A Run'
+  } else if (currentUrl.includes('/runs/')) {
+    return 'Run Details'
+  } else {
+    return 'WeRun'
+  }
+}
+
 const TopBar = props => {
-  const { classes } = props
+  const { classes, pageName } = props
   return (
     <AppBar className={classes.appBar}>
       <Toolbar className={classes.toolbar}>
         <Typography variant='h6' color='inherit'>
-          TopBar
+          {topBarTitle()}
         </Typography>
         <IconButton component={SearchLink} color='inherit'>
           <SearchRounded />
@@ -34,3 +51,4 @@ const TopBar = props => {
 }
 
 export default withStyles(styles)(TopBar)
+

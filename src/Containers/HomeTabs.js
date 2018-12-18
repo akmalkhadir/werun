@@ -1,10 +1,7 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 import { withStyles } from '@material-ui/core/styles'
 import SwipeableViews from 'react-swipeable-views'
-import AppBar from '@material-ui/core/AppBar'
-import Tabs from '@material-ui/core/Tabs'
-import Tab from '@material-ui/core/Tab'
+import { AppBar, Tabs, Tab } from '@material-ui/core'
 import RunsContainer from './RunsContainer'
 import CreateJoinFab from '../Components/CreateJoinFab'
 
@@ -14,7 +11,7 @@ const styles = theme => ({
   }
 })
 
-class FullWidthTabs extends React.Component {
+class HomeTabs extends React.Component {
   state = {
     value: 0
   }
@@ -28,7 +25,7 @@ class FullWidthTabs extends React.Component {
   }
 
   render () {
-    const { classes, theme } = this.props
+    const { classes, theme, runnerDetails } = this.props
 
     return (
       <div className={classes.root}>
@@ -49,8 +46,8 @@ class FullWidthTabs extends React.Component {
           index={this.state.value}
           onChangeIndex={this.handleChangeIndex}
         >
-          <RunsContainer dir={theme.direction}>Upcoming Runs</RunsContainer>
-          <RunsContainer dir={theme.direction}>Past Runs</RunsContainer>
+          <RunsContainer dir={theme.direction} runs={runnerDetails.upcomingRuns} >Upcoming Runs</RunsContainer>
+          <RunsContainer dir={theme.direction} runs={runnerDetails.pastRuns} >Past Runs</RunsContainer>
          
         </SwipeableViews>
         <CreateJoinFab />
@@ -59,9 +56,5 @@ class FullWidthTabs extends React.Component {
   }
 }
 
-FullWidthTabs.propTypes = {
-  classes: PropTypes.object.isRequired,
-  theme: PropTypes.object.isRequired
-}
 
-export default withStyles(styles, { withTheme: true })(FullWidthTabs)
+export default withStyles(styles, { withTheme: true })(HomeTabs)

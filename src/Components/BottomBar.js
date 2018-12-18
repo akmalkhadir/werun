@@ -5,6 +5,7 @@ import {
   withStyles
 } from '@material-ui/core'
 import { Event, People, Person } from '@material-ui/icons'
+import { Link } from 'react-router-dom'
 
 const styles = {
   root: {
@@ -19,13 +20,18 @@ class BottomBar extends Component {
     value: 0
   }
 
-  handleChange = (event, value) => {
+  handleChange = (event, value) => 
     this.setState({ value })
-  }
+  
+
+ redirectToRuns = (props) => {
+     return <Link to='/runners/1' {...props} />
+ }
+
 
   render () {
     const { classes } = this.props
-    const { value } = this.state
+    const { value} = this.state
 
     return (
       <BottomNavigation
@@ -34,7 +40,7 @@ class BottomBar extends Component {
         className={classes.root}
         showLabels
       >
-        <BottomNavigationAction label='Runs' icon={<Event />} />
+        <BottomNavigationAction component={this.redirectToRuns} label='My Runs' icon={<Event />} />
         <BottomNavigationAction label='Groups' icon={<People />} />
         <BottomNavigationAction label='Profile' icon={<Person />} />
       </BottomNavigation>

@@ -9,19 +9,15 @@ const styles = theme => ({
   }
 })
 
-function RunsContainer ({ classes, children, dir }) {
+function RunsContainer ({ classes, children, dir, runs }) {
   return (
     <div component='div' dir={dir} className={classes.root}>
       <Grid container spacing={16}>
-        <Grid item>
-          <RunCard />
-        </Grid>
-        <Grid item>
-          <RunCard />
-        </Grid>
-        <Grid item>
-          <RunCard />
-        </Grid>
+        {runs.map(run =>
+          <Grid item key={run.id} >
+            <RunCard run={run} />
+          </Grid>
+        )}
       </Grid>
     </div>
   )
