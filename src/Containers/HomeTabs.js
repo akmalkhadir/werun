@@ -60,7 +60,7 @@ class HomeTabs extends React.Component {
         icon: <Add />
       },
       {
-        color: 'secondary',
+        color: 'primary',
         className: classes.fab,
         icon: <Add />
       }
@@ -97,7 +97,7 @@ class HomeTabs extends React.Component {
         </SwipeableViews>
         {fabs.map((fab, index) => (
           <Zoom
-            key={fab.color}
+            key={fab.color + index}
             in={this.state.value === index}
             timeout={transitionDuration}
             style={{
