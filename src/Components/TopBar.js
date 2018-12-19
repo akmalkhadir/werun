@@ -35,7 +35,7 @@ const topBarTitle = () => {
 }
 
 const TopBar = props => {
-  const { classes, pageName } = props
+  const { classes } = props
   return (
     <AppBar className={classes.appBar}>
       <Toolbar className={classes.toolbar}>
@@ -51,4 +51,3 @@ const TopBar = props => {
 }
 
 export default withStyles(styles)(TopBar)
-
