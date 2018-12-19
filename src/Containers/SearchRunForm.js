@@ -5,6 +5,7 @@ import { CalendarToday, CompareArrows, Search } from '@material-ui/icons'
 
 import DateFnsUtils from '@date-io/date-fns'
 import { MuiPickersUtilsProvider, DateTimePicker } from 'material-ui-pickers'
+import { Link } from 'react-router-dom'
 
 const styles = theme => ({
   container: {
@@ -17,7 +18,8 @@ const styles = theme => ({
     marginRight: theme.spacing.unit
   },
   button: {
-    justifyContent: 'flex-start'
+    justifyContent: 'space-around',
+    margin: theme.spacing.unit
   },
   dense: {
     marginTop: 16
@@ -43,6 +45,8 @@ class CreateRunForm extends Component {
   handleDateChange = date => {
     this.setState({ date })
   }
+
+  redirectToRuns = (props) => <Link to='/runs' {...props} />
 
   render () {
     const { classes } = this.props
@@ -100,12 +104,12 @@ class CreateRunForm extends Component {
         </Grid>
         <Grid container className={classes.button}>
           <Grid item>
-            <Button fullWidth size='large' variant='contained' color='primary'>
+            <Button size='large' variant='contained' color='primary'>
               SEARCH
             </Button>
           </Grid>
           <Grid item>
-            <Button fullWidth size='large' variant='contained' color='primary'>
+            <Button component={this.redirectToRuns} size='large' variant='contained' color='primary'>
               VIEW ALL RUNS
             </Button>
           </Grid>

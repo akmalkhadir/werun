@@ -35,7 +35,7 @@ class App extends Component {
   }
 
   render () {
-    const { runnerDetails, allRuns } = this.state
+    const { runnerDetails, allRuns, currentUserId } = this.state
     return (
       <>
         <CssBaseline />
@@ -49,8 +49,8 @@ class App extends Component {
                 <HomeTabs {...props} runnerDetails={runnerDetails} />
               )}
             />
-            <Route exact path='/runs' render={props => ( <RunsContainer {...props} runs={allRuns} /> )} />
-            <Route exact path='/runs/new' component={RunForm} />
+            <Route exact path='/runs' component={props => ( <RunsContainer {...props} runs={allRuns} /> )} />
+            <Route exact path='/runs/new' render={props => ( <RunForm {...props} currentUserId={currentUserId}/> )} />
             <Route exact path='/runs/search' component={SearchRunForm} />
             <Route exact path='/runs/:id' render={props => (<RunDetails {...props} runs={allRuns} />)} />
           </Switch>
