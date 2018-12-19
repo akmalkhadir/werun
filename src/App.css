@@ -1,7 +1,7 @@
 .content_container {
   height: 100vh;
   padding: 56px 0 66px;
-  overflow: scroll;
+  overflow: scroll
 }
 
 /*
@@ -9,5 +9,6 @@
     position: fixed;
     bottom: 0;
     width: 100%;
+    
 }
 */
