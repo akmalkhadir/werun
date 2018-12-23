@@ -12,6 +12,8 @@ import {
 import { MuiPickersUtilsProvider, DateTimePicker } from 'material-ui-pickers'
 import DateFnsUtils from '@date-io/date-fns'
 import API from '../API'
+import { Redirect } from 'react-router-dom'
+
 
 const styles = theme => ({
   container: {
@@ -42,7 +44,9 @@ class CreateRunForm extends Component {
     end: ``,
     date: new Date(),
     distance: ``,
-    is_private: false
+    is_private: false,
+    toRunDetails: false,
+    createdRun: {}
   }
 
   handleChange = name => event => {
@@ -69,7 +73,9 @@ class CreateRunForm extends Component {
       distance,
       is_private
     } = this.state
+
     const { currentUserId } = this.props
+
     const run = {
       name: name,
       description: description,
@@ -80,13 +86,25 @@ class CreateRunForm extends Component {
       is_private: is_private,
       runner_id: currentUserId
     }
+
     const apiCall = new API()
     apiCall.createNewRun(run)
+    .then(createdRun => this.setState({ createdRun }))
+    .then(() => this.setState({ toRunDetails: true }))
+  debugger
   }
 
   render () {
     const { classes } = this.props
-    const { date } = this.state
+    const { date, run } = this.state
+
+    if (this.state.toRunDetails) {
+      return <Redirect to={{
+        pathname: `/runs/${run.id}`,
+        state: { run: run }
+      }} />
+    }
+
     return (
       <form className={classes.container} noValidate autoComplete='off'>
         <Grid container spacing={0} alignItems='center'>

@@ -8,9 +8,16 @@ import {
   Button,
   Typography,
   Divider,
-  Grid
+  Grid,
+  IconButton
 } from '@material-ui/core'
-import { DirectionsRun, Event, LocationOn } from '@material-ui/icons'
+import {
+  DirectionsRun,
+  Event,
+  LocationOn,
+  Directions
+} from '@material-ui/icons'
+import Api from '../API'
 
 const styles = {
   card: {},
@@ -24,14 +31,37 @@ const styles = {
     display: 'flex'
   }
 }
-
 class RunDetails extends Component {
+  state = {
+    run: {},
+    runJoined: false
+  }
+
+  componentDidMount () {
+    Api.getARun(this.props.match.params.id)
+    .then(run => {
+      this.setState({ run })
+      const attendeesIds = this.state.run.attendees.map(attendee => attendee.id)
+      if (attendeesIds.includes(this.props.currentUserId)) {
+        this.setState({ runJoined: true })
+      }
+    })
+   
+  }
+
+  handleClick = () => {
+    return this.state.runJoined ? this.props.handleUnJoinRun : this.props.handleJoinRun
+  }
+
+  
+
 
   render () {
-    const { classes, runs } = this.props
-    const run = this.props.location.state
-      ? this.props.location.state.run
-      : runs.find(run => run.id === this.props.match.params.id)
+    const { classes } = this.props
+    const { run } = this.state
+    const { handleClick } = this
+    const buttonLabel = this.state.runJoined ? 'UNJOIN' : 'JOIN'
+
     const options = {
       weekday: 'long',
       year: 'numeric',
@@ -91,14 +121,25 @@ class RunDetails extends Component {
                     {run.endLocation}
                   </Typography>
                 </Grid>
+                <Grid item>
+                  <IconButton>
+                    <Directions />
+                  </IconButton>
+                </Grid>
               </Grid>
             </CardActions>
           </div>
         </CardContent>
         <CardActions className={classes.button}>
-          <Button variant='contained' color='primary'>
-            Join
-          </Button>
+          {new Date(run.date) - new Date() > 0 ? (
+            <Button variant='contained' color='primary' onClick={handleClick}>
+              {buttonLabel}
+            </Button>
+          ) : (
+            <Button variant='contained' disabled color='primary'>
+              Event Has Ended
+            </Button>
+          )}
         </CardActions>
       </Card>
     )

@@ -28,13 +28,18 @@ class RunCard extends Component {
     this.setState({ toRunDetails: true })
   }
 
+ 
+
   render () {
-    const { classes, run } = this.props
+    const { classes, run, currentUserId } = this.props
     const { handleClick } = this
     if (this.state.toRunDetails) {
       return <Redirect to={{
       pathname: `/runs/${run.id}`,
-      state: { run: run }
+      state: { 
+        run: run,
+        currentUserId
+       }
       }} />
     }
     return (

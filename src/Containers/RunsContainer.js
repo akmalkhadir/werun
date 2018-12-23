@@ -9,13 +9,13 @@ const styles = theme => ({
   }
 })
 
-function RunsContainer ({ classes, children, dir, runs }) {
+function RunsContainer ({ classes, children, dir, runs, currentUserId }) {
   return (
     <div component='div' dir={dir} className={classes.root}>
       <Grid container spacing={16}>
         {runs.map(run =>
           <Grid item key={run.id} >
-            <RunCard run={run} />
+            <RunCard run={run} currentUserId={currentUserId} />
           </Grid>
         )}
       </Grid>
