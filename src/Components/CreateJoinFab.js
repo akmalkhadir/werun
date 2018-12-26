@@ -2,6 +2,10 @@ import React from 'react'
 
 import { Fab, Menu, MenuItem, Fade } from '@material-ui/core'
 import { Add } from '@material-ui/icons'
+import { Link } from 'react-router-dom'
+
+const CreateLink = props => <Link to="/runs/new" {...props} />
+const JoinLink = props => <Link to='/runs' {...props} />
 
 class CreateJoinFab extends React.Component {
   state = {
@@ -15,6 +19,7 @@ class CreateJoinFab extends React.Component {
   handleClose = () => {
     this.setState({ anchorEl: null })
   }
+
 
   render () {
     const { anchorEl } = this.state
@@ -32,8 +37,8 @@ class CreateJoinFab extends React.Component {
           onClose={this.handleClose}
           TransitionComponent={Fade}
         >
-          <MenuItem onClick={this.handleClose}>Create a Run</MenuItem>
-          <MenuItem onClick={this.handleClose}>Join a Run</MenuItem>
+          <MenuItem component={CreateLink}>Create a Run</MenuItem>
+          <MenuItem component={JoinLink}>Join a Run</MenuItem>
         </Menu>
       </>
     )

@@ -10,23 +10,98 @@ import HomeTabs from './Containers/HomeTabs'
 import RunsContainer from './Containers/RunsContainer'
 import RunForm from './Containers/RunForm'
 import SearchRunForm from './Containers/SearchRunForm'
+import API from './API'
 
 import './App.css'
 
 class App extends Component {
+  state = {
+    runnerDetails: {
+      upcomingRuns: [],
+      pastRuns: []
+    },
+    currentUserId: 1,
+    allRuns: []
+  }
+
+  componentDidMount () {
+    this.refreshState()
+  }
+
+  refreshState = () => {
+    API.getRunnerRuns(this.state.currentUserId)
+      .then(runnerDetails => this.setState({ runnerDetails }))
+      .then(() => API.getAllRuns().then(allRuns => this.setState({ allRuns })))
+  }
+
+  futureRuns = () => {
+    return this.state.allRuns.filter(run => new Date(run.date) - new Date() > 0)
+  }
+
+  handleRevalidate = createdRun => {
+    this.setState({ allRuns: [...this.state.allRuns, createdRun] })
+  }
+
+  handleJoinRun = ids => {
+    API.joinARun(ids).then(this.refreshState)
+  }
+
+  handleUnJoinRun = ids => {
+    API.unJoinARun(ids).then(this.refreshState)
+  }
+
   render () {
+    const { runnerDetails, allRuns, currentUserId } = this.state
+
     return (
       <>
         <CssBaseline />
-        <TopBar />
+        <TopBar position='fixed' />
         <div className='content_container'>
           <Switch>
-            <Route exact path='/users/:id' component={HomeTabs} />
-            <Route exact path='/runs' component={RunsContainer} />
-            <Route exact path='/runs/new' component={RunForm} />
+            <Route
+              exact
+              path='/runners/:id'
+              render={props => (
+                <HomeTabs {...props} runnerDetails={runnerDetails} />
+              )}
+            />
+            <Route
+              exact
+              path='/runs'
+              component={props => (
+                <RunsContainer
+                  {...props}
+                  runs={this.futureRuns()}
+                  currentUserId={currentUserId}
+                />
+              )}
+            />
+            <Route
+              exact
+              path='/runs/new'
+              render={props => (
+                <RunForm
+                  {...props}
+                  currentUserId={currentUserId}
+                  handleRevalidate={this.handleRevalidate}
+                />
+              )}
+            />
             <Route exact path='/runs/search' component={SearchRunForm} />
-            <Route exact path='/runs/:id' component={RunDetails} />
-
+            <Route
+              exact
+              path='/runs/:id'
+              render={props => (
+                <RunDetails
+                  {...props}
+                  runs={allRuns}
+                  currentUserId={currentUserId}
+                  handleJoinRun={this.handleJoinRun}
+                  handleUnJoinRun={this.handleUnJoinRun}
+                />
+              )}
+            />
           </Switch>
         </div>
         <BottomBar />

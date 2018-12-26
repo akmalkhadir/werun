@@ -1,29 +1,26 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 import RunCard from '../Components/RunCard'
-import { Grid } from '@material-ui/core'
+import { Grid, withStyles } from '@material-ui/core'
 
-function RunsContainer ({ children, dir }) {
+const styles = theme => ({
+  root: {
+    flexGrow: 1,
+    padding: 8 * 3
+  }
+})
+
+function RunsContainer ({ classes, children, dir, runs, currentUserId }) {
   return (
-    <>
+    <div component='div' dir={dir} className={classes.root}>
       <Grid container spacing={16}>
-        <Grid item>
-          <RunCard />
-        </Grid>
-        <Grid item>
-          <RunCard />
-        </Grid>
-        <Grid item>
-          <RunCard />
-        </Grid>
+        {runs.map(run =>
+          <Grid item key={run.id} >
+            <RunCard run={run} currentUserId={currentUserId} />
+          </Grid>
+        )}
       </Grid>
-    </>
+    </div>
   )
 }
 
-RunsContainer.propTypes = {
-  children: PropTypes.node.isRequired,
-  dir: PropTypes.string.isRequired
-}
-
-export default RunsContainer
+export default withStyles(styles)(RunsContainer)

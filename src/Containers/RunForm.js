@@ -9,8 +9,10 @@ import {
   LocationOn,
   CompareArrows
 } from '@material-ui/icons'
-import { MuiPickersUtilsProvider, DateTimePicker } from 'material-ui-pickers';
-import DateFnsUtils from '@date-io/date-fns';
+import { MuiPickersUtilsProvider, DateTimePicker } from 'material-ui-pickers'
+import DateFnsUtils from '@date-io/date-fns'
+import API from '../API'
+import { Redirect } from 'react-router-dom'
 
 const styles = theme => ({
   container: {
@@ -41,7 +43,9 @@ class CreateRunForm extends Component {
     end: ``,
     date: new Date(),
     distance: ``,
-    private: false
+    is_private: false,
+    toRunDetails: false,
+    createdRun: {}
   }
 
   handleChange = name => event => {
@@ -58,9 +62,51 @@ class CreateRunForm extends Component {
     this.setState({ [name]: event.target.checked })
   }
 
+  handleClick = () => {
+    const {
+      name,
+      description,
+      start,
+      end,
+      date,
+      distance,
+      is_private
+    } = this.state
+
+    const { currentUserId } = this.props
+
+    const run = {
+      name: name,
+      description: description,
+      start_location: start,
+      end_location: end,
+      distance: parseInt(distance),
+      date: date,
+      is_private: is_private,
+      runner_id: currentUserId
+    }
+
+    API.createNewRun(run).then(createdRun => {
+      this.props.handleRevalidate(createdRun)
+      this.setState({ createdRun, toRunDetails: true })
+    })
+  }
+
   render () {
     const { classes } = this.props
-    const { date } = this.state
+    const { date, createdRun } = this.state
+
+    if (this.state.toRunDetails) {
+      return (
+        <Redirect
+          to={{
+            pathname: `/runs/${createdRun.id}`,
+            state: { run: createdRun }
+          }}
+        />
+      )
+    }
+
     return (
       <form className={classes.container} noValidate autoComplete='off'>
         <Grid container spacing={0} alignItems='center'>
@@ -105,6 +151,7 @@ class CreateRunForm extends Component {
               <DateTimePicker
                 variant='filled'
                 label='Date'
+                format='d MMM yyyy | h:mm aa'
                 className={classes.textField}
                 value={date}
                 onChange={this.handleDateChange}
@@ -166,15 +213,20 @@ class CreateRunForm extends Component {
           </Grid>
           <Grid item>
             <Switch
-              checked={this.state.private}
-              onChange={this.handleToggleChange('private')}
-              value='private'
+              checked={this.state.is_private}
+              onChange={this.handleToggleChange('is_private')}
+              value='is_private'
             />
           </Grid>
         </Grid>
         <Grid container className={classes.button}>
           <Grid item>
-            <Button size='large' variant='contained' color='primary'>
+            <Button
+              onClick={this.handleClick}
+              size='large'
+              variant='contained'
+              color='primary'
+            >
               CREATE RUN
             </Button>
           </Grid>
