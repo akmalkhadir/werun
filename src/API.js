@@ -10,7 +10,7 @@ export default class Api {
   static getARun = id =>
     fetch(`http://localhost:3001/api/v1/runs/${id}`).then(resp => resp.json())
 
-  createNewRun = data =>
+  static createNewRun = data =>
     fetch(`http://localhost:3001/api/v1/runs`, {
       method: 'POST',
       body: JSON.stringify(data),
@@ -19,8 +19,8 @@ export default class Api {
       }
     })
       .then(res => res.json())
-      .then(response => console.log('Success:', JSON.stringify(response)))
-      .catch(error => console.error('Error:', error))
+     // .then(response => console.log('Success:', response))
+     // .catch(error => console.error('Error:', error))
 
   static joinARun = userAndRunId =>
     fetch(`http://localhost:3001/api/v1/runners_runs/`, {

@@ -14,7 +14,6 @@ import DateFnsUtils from '@date-io/date-fns'
 import API from '../API'
 import { Redirect } from 'react-router-dom'
 
-
 const styles = theme => ({
   container: {
     display: 'flex',
@@ -87,22 +86,24 @@ class CreateRunForm extends Component {
       runner_id: currentUserId
     }
 
-    const apiCall = new API()
-    apiCall.createNewRun(run)
-    .then(createdRun => this.setState({ createdRun }))
-    .then(() => this.setState({ toRunDetails: true }))
-  debugger
+    API.createNewRun(run).then(createdRun => {
+    this.setState({createdRun, toRunDetails: true})
+    })
   }
 
   render () {
     const { classes } = this.props
-    const { date, run } = this.state
+    const { date, createdRun } = this.state
 
     if (this.state.toRunDetails) {
-      return <Redirect to={{
-        pathname: `/runs/${run.id}`,
-        state: { run: run }
-      }} />
+      return (
+        <Redirect
+          to={{
+            pathname: `/runs/${createdRun.id}`,
+            state: { run: createdRun }
+          }}
+        />
+      )
     }
 
     return (
@@ -219,7 +220,12 @@ class CreateRunForm extends Component {
         </Grid>
         <Grid container className={classes.button}>
           <Grid item>
-            <Button onClick={this.handleClick} size='large' variant='contained' color='primary'>
+            <Button
+              onClick={this.handleClick}
+              size='large'
+              variant='contained'
+              color='primary'
+            >
               CREATE RUN
             </Button>
           </Grid>
