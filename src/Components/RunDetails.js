@@ -50,7 +50,14 @@ class RunDetails extends Component {
   }
 
   handleClick = () => {
-    return this.state.runJoined ? this.props.handleUnJoinRun : this.props.handleJoinRun
+    let runnerAndRun = { run_id: this.state.run.id, runner_id:this.props.currentUserId }
+    if (this.state.runJoined) {
+      this.setState({runJoined: false})
+      return this.props.handleUnJoinRun(runnerAndRun)
+    } else {
+      this.setState({ runJoined: true })
+      return this.props.handleJoinRun(runnerAndRun)
+    }
   }
 
   

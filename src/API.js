@@ -1,10 +1,10 @@
 export default class Api {
-  getRunnerRuns = id =>
+  static getRunnerRuns = id =>
     fetch(`http://localhost:3001/api/v1/runners/${id}`).then(resp =>
       resp.json()
     )
 
-  getAllRuns = () =>
+  static getAllRuns = () =>
     fetch(`http://localhost:3001/api/v1/runs`).then(resp => resp.json())
 
   static getARun = id =>

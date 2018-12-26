@@ -13,7 +13,6 @@ import SearchRunForm from './Containers/SearchRunForm'
 import API from './API'
 
 import './App.css'
-import Api from './API'
 
 class App extends Component {
   state = {
@@ -26,15 +25,13 @@ class App extends Component {
   }
 
   componentDidMount () {
-    const apiCall = new API()
-    apiCall
-      .getRunnerRuns(this.state.currentUserId)
+    this.refreshState()
+  }
+
+  refreshState = () => {
+    API.getRunnerRuns(this.state.currentUserId)
       .then(runnerDetails => this.setState({ runnerDetails }))
-      .then(() =>
-        apiCall
-          .getAllRuns()
-          .then(allRuns => this.setState({ allRuns, revalidate: false }))
-      )
+      .then(() => API.getAllRuns().then(allRuns => this.setState({ allRuns })))
   }
 
   futureRuns = () => {
@@ -46,11 +43,11 @@ class App extends Component {
   }
 
   handleJoinRun = ids => {
-    Api.joinARun(ids)
+    API.joinARun(ids).then(this.refreshState)
   }
 
-  handleUnjoinRun = ids => {
-    Api.unJoinARun(ids)
+  handleUnJoinRun = ids => {
+    API.unJoinARun(ids).then(this.refreshState)
   }
 
   render () {
@@ -101,7 +98,7 @@ class App extends Component {
                   runs={allRuns}
                   currentUserId={currentUserId}
                   handleJoinRun={this.handleJoinRun}
-                  handleUnjoinRun={this.handleUnjoinRun}
+                  handleUnJoinRun={this.handleUnJoinRun}
                 />
               )}
             />
