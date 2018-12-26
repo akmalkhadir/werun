@@ -87,7 +87,8 @@ class CreateRunForm extends Component {
     }
 
     API.createNewRun(run).then(createdRun => {
-    this.setState({createdRun, toRunDetails: true})
+      this.props.handleRevalidate(createdRun)
+      this.setState({ createdRun, toRunDetails: true })
     })
   }
 

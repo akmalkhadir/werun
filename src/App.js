@@ -21,7 +21,7 @@ class App extends Component {
       upcomingRuns: [],
       pastRuns: []
     },
-    currentUserId: 3,
+    currentUserId: 1,
     allRuns: []
   }
 
@@ -31,12 +31,18 @@ class App extends Component {
       .getRunnerRuns(this.state.currentUserId)
       .then(runnerDetails => this.setState({ runnerDetails }))
       .then(() =>
-        apiCall.getAllRuns().then(allRuns => this.setState({ allRuns }))
+        apiCall
+          .getAllRuns()
+          .then(allRuns => this.setState({ allRuns, revalidate: false }))
       )
   }
 
   futureRuns = () => {
     return this.state.allRuns.filter(run => new Date(run.date) - new Date() > 0)
+  }
+
+  handleRevalidate = createdRun => {
+    this.setState({ allRuns: [...this.state.allRuns, createdRun] })
   }
 
   handleJoinRun = ids => {
@@ -78,7 +84,11 @@ class App extends Component {
               exact
               path='/runs/new'
               render={props => (
-                <RunForm {...props} currentUserId={currentUserId} />
+                <RunForm
+                  {...props}
+                  currentUserId={currentUserId}
+                  handleRevalidate={this.handleRevalidate}
+                />
               )}
             />
             <Route exact path='/runs/search' component={SearchRunForm} />
