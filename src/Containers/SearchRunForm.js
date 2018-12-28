@@ -6,18 +6,14 @@ import {
   IconButton,
   Paper,
   InputBase,
-  Typography,
   Card,
   CardActionArea,
-  CardMedia,
-  CardContent
+  CardMedia
 } from '@material-ui/core'
 import { Search } from '@material-ui/icons'
 import icon5k from '../images/icons-5k.svg'
 import icon10k from '../images/icons-10k.svg'
 
-import DateFnsUtils from '@date-io/date-fns'
-import { MuiPickersUtilsProvider, DateTimePicker } from 'material-ui-pickers'
 import { Link } from 'react-router-dom'
 
 const styles = theme => ({
@@ -68,20 +64,18 @@ class SearchRunForm extends Component {
     })
   }
 
-  handleDateChange = date => {
-    this.setState({ date })
-  }
-
   redirectToRuns = props => <Link to='/runs' {...props} />
 
   render () {
     const { classes } = this.props
-    const { date } = this.state
+    const { handleChange } = this
     return (
       <>
         <Paper className={classes.root} elevation={1}>
           <InputBase
+            onChange={handleChange('searchTerm')}
             className={classes.input}
+            value={this.state.searchTerm}
             placeholder='Search Upcoming Runs'
           />
           <IconButton className={classes.iconButton} aria-label='Search'>
