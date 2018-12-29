@@ -5,7 +5,6 @@ import { AppBar, Tabs, Tab, Zoom, Fab, Menu, MenuItem, Fade } from '@material-ui
 import RunsContainer from './RunsContainer'
 import { Add } from '@material-ui/icons'
 import { Link } from 'react-router-dom'
-import LocationSearch from '../Components/LocationSearch';
 
 const CreateLink = props => <Link to='/runs/new' {...props} />
 const JoinLink = props => <Link to='/runs' {...props} />
@@ -70,7 +69,6 @@ class HomeTabs extends React.Component {
 
     return (
       <div className={classes.root}>
-      <LocationSearch />
         <AppBar position='static' color='default'>
           <Tabs
             value={this.state.value}
