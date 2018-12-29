@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import PlacesAutocomplete, {
   geocodeByAddress,
-  geocodeByPlaceId,
   getLatLng
 } from 'react-places-autocomplete'
 import {
@@ -10,11 +9,11 @@ import {
   InputBase,
   IconButton,
   MenuItem,
-  Menu,
   ClickAwayListener,
   MenuList,
   Popper,
-  Grow
+  Grow,
+  RootRef
 } from '@material-ui/core'
 import { LocationSearching } from '@material-ui/icons'
 
@@ -35,8 +34,9 @@ const styles = theme => ({
     justifyContent: 'center'
   },
   paper: {
-    width: '240px',
-    margin: theme.spacing.unit
+    maxWidth: '90vw',
+    marginRight: theme.spacing.unit * 2,
+    marginLeft: theme.spacing.unit
   },
   input: {
     marginLeft: 8,
@@ -56,21 +56,27 @@ const styles = theme => ({
 class LocationSearch extends Component {
   state = {
     address: '',
-    coordinates: {},
+    lat: 0,
+    lng: 0,
     anchorEl: null,
     menuOpen: false
   }
 
   handleChange = address => {
+    console.log(this.anchorEl)
     this.setState({ address })
     this.setState(state => ({ menuOpen: !state.menuOpen }))
   }
 
   handleSelect = address => {
     this.setState({ address })
+    this.props.setAddress(address)
     geocodeByAddress(address)
       .then(results => getLatLng(results[0]))
-      .then(coordinates => this.setState({ coordinates }))
+      .then(coordinates => {
+        this.props.setCoordinates(coordinates.lat, coordinates.lng)
+        this.setState({ lat: coordinates.lat, lng: coordinates.lng })
+      })
       .then(coordinates => console.log('Success', coordinates))
       .catch(error => console.log('Error', error))
   }
@@ -83,12 +89,8 @@ class LocationSearch extends Component {
     this.setState({ menuOpen: false })
   }
 
-  handleClick = event => {
-    this.setState({ anchorEl: event.currentTarget })
-  }
-
   render () {
-    const { handleChange, handleSelect, handleClose, handleClick } = this
+    const { handleChange, handleSelect, handleClose } = this
     const { address, menuOpen } = this.state
     const { classes } = this.props
     return (
@@ -99,37 +101,41 @@ class LocationSearch extends Component {
         debounce={500}
       >
         {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
-          <div>
-            <Paper className={classes.root} elevation={1}>
-              <InputBase
-                {...getInputProps()}
-                inputRef={node => {
-                  this.anchorEl = node
-                }}
-                className={classes.input}
-                value={this.state.address}
-                placeholder='Search Upcoming Runs Near You'
-              />
-              <IconButton className={classes.iconButton} aria-label='Search'>
-                <LocationSearching />
-              </IconButton>
-            </Paper>
+          <>
+            <RootRef rootRef={React.createRef()}>
+              <Paper
+                className={classes.root}
+                elevation={1}
+              >
+                <InputBase
+                  {...getInputProps()}
+                  className={classes.input}
+                  value={this.state.address}
+                  placeholder='Search Upcoming Runs Near You'
+                  inputRef={node => {
+                    this.anchorEl = node
+                  }}
+                />
+                <IconButton className={classes.iconButton} aria-label='Search'>
+                  <LocationSearching />
+                </IconButton>
+              </Paper>
+            </RootRef>
+
             <Popper
               open={menuOpen}
               anchorEl={this.anchorEl}
               transition
-              disablePortal
+              disablePortal={false}
             >
               {({ TransitionProps, placement }) => (
                 <Grow
                   {...TransitionProps}
-                  id='menu-list-grow'
                   style={{
-                    transformOrigin:
-                      placement === 'bottom' ? 'center top' : 'center bottom'
+                    transformOrigin: 'bottom'
                   }}
                 >
-                  <Paper>
+                  <Paper className={classes.paper}>
                     <ClickAwayListener onClickAway={handleClose}>
                       <MenuList>
                         {suggestions.map(suggestion => (
@@ -143,35 +149,7 @@ class LocationSearch extends Component {
                 </Grow>
               )}
             </Popper>
-            <input
-              {...getInputProps({
-                placeholder: 'Search Places ...',
-                className: 'location-search-input'
-              })}
-            />
-            <div className='autocomplete-dropdown-container'>
-              {loading && <div>Loading...</div>}
-              {suggestions.map(suggestion => {
-                const className = suggestion.active
-                  ? 'suggestion-item--active'
-                  : 'suggestion-item'
-                // inline style for demonstration purpose
-                const style = suggestion.active
-                  ? { backgroundColor: '#fafafa', cursor: 'pointer' }
-                  : { backgroundColor: '#ffffff', cursor: 'pointer' }
-                return (
-                  <div
-                    {...getSuggestionItemProps(suggestion, {
-                      className,
-                      style
-                    })}
-                  >
-                    <span>{suggestion.description}</span>
-                  </div>
-                )
-              })}
-            </div>
-          </div>
+          </>
         )}
       </PlacesAutocomplete>
     )
