@@ -11,7 +11,6 @@ class RunsPage extends Component {
         <SortInput />
         <Divider />
         <RunsContainer runs={runs} currentUserId={currentUserId} />
-        
       </div>
     )
   }
