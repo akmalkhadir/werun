@@ -20,6 +20,8 @@ const theme = createMuiTheme({
   }
 })
 
+const API_KEY = process.env.REACT_APP_MAPS_API
+
 const Root = ({ store }) => (
   <Provider store={store}>
     <MuiThemeProvider theme={theme}>
