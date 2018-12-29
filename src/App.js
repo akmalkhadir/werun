@@ -7,7 +7,7 @@ import BottomBar from './Components/BottomBar'
 import RunDetails from './Components/RunDetails'
 
 import HomeTabs from './Containers/HomeTabs'
-import RunsContainer from './Containers/RunsContainer'
+import RunsPage from './Containers/RunsPage'
 import RunForm from './Containers/RunForm'
 import SearchRunForm from './Containers/SearchRunForm'
 import API from './API'
@@ -70,7 +70,7 @@ class App extends Component {
               exact
               path='/runs'
               component={props => (
-                <RunsContainer
+                <RunsPage
                   {...props}
                   runs={this.futureRuns()}
                   currentUserId={currentUserId}

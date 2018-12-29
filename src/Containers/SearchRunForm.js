@@ -1,35 +1,57 @@
 import React, { Component } from 'react'
 import { withStyles } from '@material-ui/core/styles'
-import { TextField, Grid, Button } from '@material-ui/core'
-import { CalendarToday, CompareArrows, Search } from '@material-ui/icons'
+import {
+  Grid,
+  Button,
+  IconButton,
+  Paper,
+  InputBase,
+  Card,
+  CardActionArea,
+  CardMedia
+} from '@material-ui/core'
+import { Search } from '@material-ui/icons'
+import icon5k from '../images/icons-5k.svg'
+import icon10k from '../images/icons-10k.svg'
 
-import DateFnsUtils from '@date-io/date-fns'
-import { MuiPickersUtilsProvider, DateTimePicker } from 'material-ui-pickers'
 import { Link } from 'react-router-dom'
 
 const styles = theme => ({
-  container: {
-    display: 'flex',
-    flexWrap: 'wrap',
-    margin: theme.spacing.unit
-  },
-  textField: {
-    marginLeft: theme.spacing.unit,
-    marginRight: theme.spacing.unit
-  },
   button: {
     justifyContent: 'space-around',
     margin: theme.spacing.unit
   },
-  dense: {
-    marginTop: 16
+  root: {
+    padding: '2px 4px',
+    display: 'flex',
+    alignItems: 'center',
+    width: 'auto',
+    margin: theme.spacing.unit
   },
-  menu: {
-    width: 200
+  box: {
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+  paper: {
+    width: '240px',
+    margin: theme.spacing.unit
+  },
+  input: {
+    marginLeft: 8,
+    flex: 1
+  },
+  iconButton: {
+    padding: 10
+  },
+  card: {
+    maxWidth: 170
+  },
+  media: {
+    height: '100%'
   }
 })
 
-class CreateRunForm extends Component {
+class SearchRunForm extends Component {
   state = {
     searchTerm: ``,
     date: new Date(),
@@ -42,81 +64,89 @@ class CreateRunForm extends Component {
     })
   }
 
-  handleDateChange = date => {
-    this.setState({ date })
-  }
-
-  redirectToRuns = (props) => <Link to='/runs' {...props} />
+  redirectToRuns = props => <Link to='/runs' {...props} />
 
   render () {
     const { classes } = this.props
-    const { date } = this.state
+    const { handleChange } = this
     return (
-      <form className={classes.container} noValidate autoComplete='off'>
-        <Grid container spacing={0} alignItems='center'>
+      <>
+        <Paper className={classes.root} elevation={1}>
+          <InputBase
+            onChange={handleChange('searchTerm')}
+            className={classes.input}
+            value={this.state.searchTerm}
+            placeholder='Search Upcoming Runs'
+          />
+          <IconButton className={classes.iconButton} aria-label='Search'>
+            <Search />
+          </IconButton>
+        </Paper>
+        <Grid className={classes.box} spacing={16} container>
           <Grid item>
-            <Search fontSize='large' color='action' />
+            <Card className={classes.card}>
+              <CardActionArea>
+                <CardMedia
+                  component='img'
+                  className={classes.media}
+                  image={icon5k}
+                  title='5K'
+                />
+              </CardActionArea>
+            </Card>
           </Grid>
           <Grid item>
-            <TextField
-              id='searchTerm'
-              label='Search'
-              className={classes.textField}
-              value={this.state.searchTerm}
-              onChange={this.handleChange('searchTerm')}
-              margin='normal'
-              variant='filled'
-            />
-          </Grid>
-        </Grid>
-        <Grid container spacing={0} alignItems='center'>
-          <Grid item>
-            <CalendarToday fontSize='large' color='action' />
+            <Card className={classes.card}>
+              <CardActionArea>
+                <CardMedia
+                  component='img'
+                  className={classes.media}
+                  image={icon10k}
+                  title='10K'
+                />
+              </CardActionArea>
+            </Card>
           </Grid>
           <Grid item>
-            <MuiPickersUtilsProvider utils={DateFnsUtils}>
-              <DateTimePicker
-                variant='filled'
-                label='Date'
-                format='d MMM yyyy | h:mm aa'
-                className={classes.textField}
-                value={date}
-                onChange={this.handleDateChange}
-              />
-            </MuiPickersUtilsProvider>
-          </Grid>
-        </Grid>
-        <Grid container spacing={0} alignItems='center'>
-          <Grid item>
-            <CompareArrows fontSize='large' color='action' />
+            <Card className={classes.card}>
+              <CardActionArea>
+                <CardMedia
+                  component='img'
+                  className={classes.media}
+                  image={icon5k}
+                  title='5K'
+                />
+              </CardActionArea>
+            </Card>
           </Grid>
           <Grid item>
-            <TextField
-              id='distance'
-              label='Distance'
-              className={classes.textField}
-              value={this.state.distance}
-              onChange={this.handleChange('distance')}
-              margin='normal'
-              variant='filled'
-            />
+            <Card className={classes.card}>
+              <CardActionArea>
+                <CardMedia
+                  component='img'
+                  className={classes.media}
+                  image={icon10k}
+                  title='10K'
+                />
+              </CardActionArea>
+            </Card>
           </Grid>
         </Grid>
         <Grid container className={classes.button}>
           <Grid item>
-            <Button size='large' variant='contained' color='primary'>
-              SEARCH
-            </Button>
-          </Grid>
-          <Grid item>
-            <Button component={this.redirectToRuns} size='large' variant='contained' color='primary'>
+            <Button
+              component={this.redirectToRuns}
+              size='large'
+              variant='contained'
+              color='primary'
+            >
               VIEW ALL RUNS
             </Button>
           </Grid>
         </Grid>
-      </form>
+      </>
     )
   }
 }
 
-export default withStyles(styles)(CreateRunForm)
+export default withStyles(styles)(SearchRunForm)
