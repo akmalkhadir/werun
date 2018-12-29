@@ -4,6 +4,12 @@ import RunsContainer from './RunsContainer'
 import { Divider } from '@material-ui/core'
 
 class RunsPage extends Component {
+
+state = {
+  sortBy: '',
+  coordinates: 0
+}
+
   render () {
     const { runs, currentUserId } = this.props
     return (

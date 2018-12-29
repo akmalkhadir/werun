@@ -64,7 +64,15 @@ class SearchRunForm extends Component {
     this.setState({ address })
   }
 
-  redirectToRuns = props => <Link to='/runs' {...props} />
+  redirectToRuns = props => (
+    <Link
+      to={{
+        pathname: '/runs',
+        state: { lat: this.state.lat, lng: this.state.lng }
+      }}
+      {...props}
+    />
+  )
 
   render () {
     const { classes } = this.props
