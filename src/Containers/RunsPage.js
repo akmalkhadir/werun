@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import SortInput from '../Components/SortInput'
 import RunsContainer from './RunsContainer'
-import { Divider } from '@material-ui/core';
+import { Divider } from '@material-ui/core'
 
 class RunsPage extends Component {
   render () {
@@ -10,8 +10,7 @@ class RunsPage extends Component {
       <div>
         <SortInput />
         <Divider />
-        <RunsContainer runs={runs}
-          currentUserId={currentUserId} />
+        <RunsContainer runs={runs} currentUserId={currentUserId} />
       </div>
     )
   }
