@@ -68,7 +68,6 @@ class RunsPage extends Component {
         <SortInput setSortBy={this.setSortBy} />
         <Divider />
         <RunsContainer
-          sortedRuns={this.sortRunsByDistance()}
           runs={runsToDisplay(runs)}
           currentUserId={currentUserId}
         />
