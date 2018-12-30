@@ -44,6 +44,7 @@ class SortInput extends Component {
   }
 
   handleMenuClick = (option, e) => {
+    this.props.setSortBy(option)
     this.setState({ sort: option, open: false })
   }
 

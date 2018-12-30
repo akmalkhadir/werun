@@ -3,18 +3,15 @@ import { withStyles } from '@material-ui/core/styles'
 import {
   Grid,
   Button,
-  IconButton,
-  Paper,
-  InputBase,
   Card,
   CardActionArea,
   CardMedia
 } from '@material-ui/core'
-import { Search } from '@material-ui/icons'
 import icon5k from '../images/icons-5k.svg'
 import icon10k from '../images/icons-10k.svg'
 
 import { Link } from 'react-router-dom'
+import LocationSearch from '../Components/LocationSearch'
 
 const styles = theme => ({
   button: {
@@ -53,35 +50,38 @@ const styles = theme => ({
 
 class SearchRunForm extends Component {
   state = {
-    searchTerm: ``,
     date: new Date(),
-    distance: ``
+    address: '',
+    lat: 0,
+    lng: 0
   }
 
-  handleChange = name => event => {
-    this.setState({
-      [name]: event.target.value
-    })
+  setCoordinates = (lat, lng) => {
+    this.setState({ lat, lng })
   }
 
-  redirectToRuns = props => <Link to='/runs' {...props} />
+  setAddress = address => {
+    this.setState({ address })
+  }
+
+  redirectToRuns = props => (
+    <Link
+      to={{
+        pathname: '/runs',
+        state: { lat: this.state.lat, lng: this.state.lng }
+      }}
+      {...props}
+    />
+  )
 
   render () {
     const { classes } = this.props
-    const { handleChange } = this
     return (
       <>
-        <Paper className={classes.root} elevation={1}>
-          <InputBase
-            onChange={handleChange('searchTerm')}
-            className={classes.input}
-            value={this.state.searchTerm}
-            placeholder='Search Upcoming Runs'
-          />
-          <IconButton className={classes.iconButton} aria-label='Search'>
-            <Search />
-          </IconButton>
-        </Paper>
+        <LocationSearch
+          setCoordinates={this.setCoordinates}
+          setAddress={this.setAddress}
+        />
         <Grid className={classes.box} spacing={16} container>
           <Grid item>
             <Card className={classes.card}>
@@ -140,7 +140,7 @@ class SearchRunForm extends Component {
               variant='contained'
               color='primary'
             >
-              VIEW ALL RUNS
+              SEARCH
             </Button>
           </Grid>
         </Grid>
