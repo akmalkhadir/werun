@@ -140,7 +140,7 @@ class SearchRunForm extends Component {
               variant='contained'
               color='primary'
             >
-              SEARCH
+              DISCOVER
             </Button>
           </Grid>
         </Grid>
