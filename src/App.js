@@ -20,7 +20,7 @@ class App extends Component {
       upcomingRuns: [],
       pastRuns: []
     },
-    currentUserId: 1,
+    currentUserId: 3,
     allRuns: []
   }
 
@@ -104,7 +104,7 @@ class App extends Component {
             />
           </Switch>
         </div>
-        <BottomBar />
+        <BottomBar currentUserId={currentUserId} />
       </>
     )
   }

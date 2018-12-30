@@ -25,7 +25,8 @@ class BottomBar extends Component {
   
 
  redirectToRuns = (props) => {
-     return <Link to='/runners/1' {...props} />
+   const { currentUserId } =  this.props
+     return <Link to={`/runners/${currentUserId}`} {...props} />
  }
 
 
