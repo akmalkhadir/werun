@@ -30,6 +30,14 @@ class RunsPage extends Component {
     this.setState({ sortBy: term })
   }
 
+  componentDidMount () {
+    const { state } = this.props.location
+
+    if (state) {
+      this.setState({ lat: state.lat, lng: state.lng })
+    }
+  }
+
   sortRunsByDistance = () => {
     if (this.props.runs.length > 0) {
       let sortedRuns = [...this.props.runs].sort(
