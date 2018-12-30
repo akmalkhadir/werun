@@ -3,6 +3,7 @@ import SortInput from '../Components/SortInput'
 import RunsContainer from './RunsContainer'
 import { Divider } from '@material-ui/core'
 import { distance, point } from '@turf/turf'
+import { compareAsc } from 'date-fns'
 
 class RunsPage extends Component {
   state = {
@@ -38,7 +39,14 @@ class RunsPage extends Component {
     }
   }
 
-
+  sortRunsByDate = () => {
+    if (this.props.runs.length > 0) {
+      let sortedRuns = [...this.props.runs].sort((a, b) =>
+        compareAsc(a.date, b.date)
+      )
+      return sortedRuns
+    }
+  }
 
   // depending on coordinates set in state, filter this.props runs within 20k radius, then sort by ascending distance, then pass runs, to runs
 
@@ -48,8 +56,8 @@ class RunsPage extends Component {
       switch (this.state.sortBy) {
         case 'Nearest Location':
           return this.sortRunsByDistance()
-          case 'Date':
-          return runs
+        case 'Date':
+          return this.sortRunsByDate()
         default:
           return runs
       }
