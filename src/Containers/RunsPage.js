@@ -25,25 +25,45 @@ class RunsPage extends Component {
     return this.calculateDistance(startLat, startLng)
   }
 
-
+  setSortBy = term => {
+    this.setState({ sortBy: term })
+  }
 
   sortRunsByDistance = () => {
     if (this.props.runs.length > 0) {
-      let sortedRuns = [...this.props.runs].sort((a, b) => this.getRunDistance(a) - this.getRunDistance(b))
+      let sortedRuns = [...this.props.runs].sort(
+        (a, b) => this.getRunDistance(a) - this.getRunDistance(b)
+      )
       return sortedRuns
     }
   }
+
 
 
   // depending on coordinates set in state, filter this.props runs within 20k radius, then sort by ascending distance, then pass runs, to runs
 
   render () {
     const { runs, currentUserId } = this.props
+    const runsToDisplay = runs => {
+      switch (this.state.sortBy) {
+        case 'Nearest Location':
+          return this.sortRunsByDistance()
+          case 'Date':
+          return runs
+        default:
+          return runs
+      }
+    }
+
     return (
       <div>
-        <SortInput />
+        <SortInput setSortBy={this.setSortBy} />
         <Divider />
-        <RunsContainer sortedRuns={this.sortRunsByDistance()} runs={runs} currentUserId={currentUserId} />
+        <RunsContainer
+          sortedRuns={this.sortRunsByDistance()}
+          runs={runsToDisplay(runs)}
+          currentUserId={currentUserId}
+        />
       </div>
     )
   }
