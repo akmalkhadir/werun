@@ -13,6 +13,7 @@ import SearchRunForm from './Containers/SearchRunForm'
 import API from './API'
 
 import './App.css'
+import RunDetailsWithMap from './Containers/RunDetailsWithMap';
 
 class App extends Component {
   state = {
@@ -102,6 +103,7 @@ class App extends Component {
                 />
               )}
             />
+            <Route exact path='/test' component={RunDetailsWithMap} />
           </Switch>
         </div>
         <BottomBar currentUserId={currentUserId} />

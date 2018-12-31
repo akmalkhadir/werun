@@ -19,18 +19,22 @@ import {
 } from '@material-ui/icons'
 import Api from '../API'
 
-const styles = {
-  card: {},
+const styles = theme => ({
+  root: {
+    borderRadius: 0,
+    height: '100vh'
+  },
   media: {
     objectFit: 'cover'
   },
   button: {
-    float: 'right'
+    float: 'right',
+    marginRight: theme.spacing.unit * 2
   },
   actions: {
     display: 'flex'
   }
-}
+})
 class RunDetails extends Component {
   state = {
     run: {},
@@ -38,30 +42,28 @@ class RunDetails extends Component {
   }
 
   componentDidMount () {
-    Api.getARun(this.props.match.params.id)
-    .then(run => {
+    Api.getARun(this.props.match.params.id).then(run => {
       this.setState({ run })
       const attendeesIds = this.state.run.attendees.map(attendee => attendee.id)
       if (attendeesIds.includes(this.props.currentUserId)) {
         this.setState({ runJoined: true })
       }
     })
-   
   }
 
   handleClick = () => {
-    let runnerAndRun = { run_id: this.state.run.id, runner_id:this.props.currentUserId }
+    let runnerAndRun = {
+      run_id: this.state.run.id,
+      runner_id: this.props.currentUserId
+    }
     if (this.state.runJoined) {
-      this.setState({runJoined: false})
+      this.setState({ runJoined: false })
       return this.props.handleUnJoinRun(runnerAndRun)
     } else {
       this.setState({ runJoined: true })
       return this.props.handleJoinRun(runnerAndRun)
     }
   }
-
-  
-
 
   render () {
     const { classes } = this.props
@@ -78,7 +80,7 @@ class RunDetails extends Component {
       minute: 'numeric'
     }
     return (
-      <Card className={classes.card}>
+      <Card className={classes.root} elevation={0}>
         <CardMedia
           component='img'
           alt={run.name}
@@ -95,17 +97,15 @@ class RunDetails extends Component {
             <Typography component='p'>{run.description}</Typography>
           </div>
           <div>
-            <CardActions className={classes.actions} disableActionSpacing>
-              <Grid container spacing={8}>
-                <Grid item>
-                  <Typography>
-                    <DirectionsRun />
-                    {run.distance}K
-                  </Typography>
+            <CardActions>
+              <Grid container spacing={16} alignItems='center'>
+                <Grid item className={classes.actions}>
+                  <DirectionsRun />
+                  <Typography>{run.distance}K</Typography>
                 </Grid>
-                <Grid item>
+                <Grid item className={classes.actions}>
+                  <Event />
                   <Typography>
-                    <Event />
                     {new Date(run.date).toLocaleDateString(undefined, options)}
                   </Typography>
                 </Grid>
@@ -114,19 +114,15 @@ class RunDetails extends Component {
           </div>
           <Divider />
           <div>
-            <CardActions className={classes.actions} disableActionSpacing>
-              <Grid container spacing={8}>
-                <Grid item>
-                  <Typography>
-                    <LocationOn color='primary' />
-                    {run.startLocation}
-                  </Typography>
+            <CardActions>
+              <Grid container spacing={16} alignItems='center'>
+                <Grid item className={classes.actions}>
+                  <LocationOn color='primary' />
+                  <Typography>{run.startLocation}</Typography>
                 </Grid>
-                <Grid item>
-                  <Typography>
-                    <LocationOn color='secondary' />
-                    {run.endLocation}
-                  </Typography>
+                <Grid item className={classes.actions}>
+                  <LocationOn color='secondary' />
+                  <Typography>{run.endLocation}</Typography>
                 </Grid>
                 <Grid item>
                   <IconButton>
