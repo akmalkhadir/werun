@@ -32,7 +32,6 @@ class RunsPage extends Component {
 
   componentDidMount () {
     const { state } = this.props.location
-
     if (state) {
       this.setState({ lat: state.lat, lng: state.lng })
     }
