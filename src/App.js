@@ -13,7 +13,7 @@ import SearchRunForm from './Containers/SearchRunForm'
 import API from './API'
 
 import './App.css'
-import RunDetailsWithMap from './Containers/RunDetailsWithMap';
+import RunDetailsWithMap from './Containers/RunDetailsWithMap'
 
 class App extends Component {
   state = {
@@ -30,9 +30,12 @@ class App extends Component {
   }
 
   refreshState = () => {
-    API.getRunnerRuns(this.state.currentUserId)
-      .then(runnerDetails => this.setState({ runnerDetails }))
-      .then(() => API.getAllRuns().then(allRuns => this.setState({ allRuns })))
+    Promise.all([
+      API.getRunnerRuns(this.state.currentUserId),
+      API.getAllRuns()
+    ]).then(([runnerDetails, allRuns]) =>
+      this.setState({ runnerDetails, allRuns })
+    )
   }
 
   futureRuns = () => {
@@ -53,6 +56,8 @@ class App extends Component {
 
   render () {
     const { runnerDetails, allRuns, currentUserId } = this.state
+
+    console.log('hello')
 
     return (
       <>
