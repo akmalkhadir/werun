@@ -63,7 +63,6 @@ class LocationSearch extends Component {
   }
 
   handleChange = address => {
-    console.log(this.anchorEl)
     this.setState({ address })
     this.setState(state => ({ menuOpen: !state.menuOpen }))
   }
@@ -77,7 +76,6 @@ class LocationSearch extends Component {
         this.props.setCoordinates(coordinates.lat, coordinates.lng)
         this.setState({ lat: coordinates.lat, lng: coordinates.lng })
       })
-      .then(coordinates => console.log('Success', coordinates))
       .catch(error => console.log('Error', error))
   }
 

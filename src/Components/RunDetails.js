@@ -4,7 +4,6 @@ import {
   Card,
   CardActions,
   CardContent,
-  CardMedia,
   Button,
   Typography,
   Divider,
@@ -18,41 +17,54 @@ import {
   Directions
 } from '@material-ui/icons'
 import Api from '../API'
+import MapContainer from '../Containers/MapContainer'
 
-const styles = {
-  card: {},
+const styles = theme => ({
+  root: {
+    borderRadius: 0,
+    height: '55vh'
+  },
   media: {
     objectFit: 'cover'
   },
   button: {
-    float: 'right'
+    float: 'right',
+    marginRight: theme.spacing.unit * 2
   },
   actions: {
     display: 'flex'
+  },
+  title: {
+    flexDirection: 'column',
+    alignItems: 'flex-start'
   }
-}
+})
 class RunDetails extends Component {
   state = {
     run: {},
     runJoined: false
   }
 
+  // I have all runs, i have the id from this props.match.params.id
+
   componentDidMount () {
-    Api.getARun(this.props.match.params.id)
-    .then(run => {
-      this.setState({ run })
-      const attendeesIds = this.state.run.attendees.map(attendee => attendee.id)
+    Api.getARun(this.props.match.params.id).then(run => {
+      const attendeesIds = run.attendees.map(attendee => attendee.id)
       if (attendeesIds.includes(this.props.currentUserId)) {
-        this.setState({ runJoined: true })
+        this.setState({ runJoined: true, run })
+      } else {
+        this.setState({ run })
       }
     })
-   
   }
 
   handleClick = () => {
-    let runnerAndRun = { run_id: this.state.run.id, runner_id:this.props.currentUserId }
+    let runnerAndRun = {
+      run_id: this.props.match.params.id,
+      runner_id: this.props.currentUserId
+    }
     if (this.state.runJoined) {
-      this.setState({runJoined: false})
+      this.setState({ runJoined: false })
       return this.props.handleUnJoinRun(runnerAndRun)
     } else {
       this.setState({ runJoined: true })
@@ -60,14 +72,17 @@ class RunDetails extends Component {
     }
   }
 
-  
-
+  giveDirections
 
   render () {
+    console.log('bello')
+
     const { classes } = this.props
-    const { run } = this.state
     const { handleClick } = this
+    const { run } = this.props.location.state
     const buttonLabel = this.state.runJoined ? 'UNJOIN' : 'JOIN'
+
+    const citymapperLink = 'https://citymapper.com/directions?endcoord=51.537060%2C-0.079179&endname=The%20Proud%20Archivist&endaddress=2-10%20Hertford%20Road%2C%20London%2C%20N1%205ET'
 
     const options = {
       weekday: 'long',
@@ -78,64 +93,48 @@ class RunDetails extends Component {
       minute: 'numeric'
     }
     return (
-      <Card className={classes.card}>
-        <CardMedia
-          component='img'
-          alt={run.name}
-          className={classes.media}
-          height='280'
-          image='https://static.standard.co.uk/s3fs-public/thumbnails/image/2017/01/22/11/sunrise2201m.jpg'
-          title={run.name}
-        />
+      <>
+      <MapContainer run={run} />
+      <Card className={classes.root} elevation={0}>
         <CardContent>
-          <div>
-            <Typography gutterBottom variant='h5' component='h2'>
+          <CardActions className={classes.title}>
+            <Typography align='left' gutterBottom variant='h5' component='h2'>
               {run.name}
             </Typography>
             <Typography component='p'>{run.description}</Typography>
-          </div>
-          <div>
-            <CardActions className={classes.actions} disableActionSpacing>
-              <Grid container spacing={8}>
-                <Grid item>
-                  <Typography>
-                    <DirectionsRun />
-                    {run.distance}K
-                  </Typography>
-                </Grid>
-                <Grid item>
-                  <Typography>
-                    <Event />
-                    {new Date(run.date).toLocaleDateString(undefined, options)}
-                  </Typography>
-                </Grid>
+          </CardActions>
+          <CardActions>
+            <Grid container spacing={16} alignItems='center'>
+              <Grid item className={classes.actions}>
+                <DirectionsRun />
+                <Typography>{run.distance}K</Typography>
               </Grid>
-            </CardActions>
-          </div>
+              <Grid item className={classes.actions}>
+                <Event />
+                <Typography>
+                  {new Date(run.date).toLocaleDateString(undefined, options)}
+                </Typography>
+              </Grid>
+            </Grid>
+          </CardActions>
           <Divider />
-          <div>
-            <CardActions className={classes.actions} disableActionSpacing>
-              <Grid container spacing={8}>
-                <Grid item>
-                  <Typography>
-                    <LocationOn color='primary' />
-                    {run.startLocation}
-                  </Typography>
-                </Grid>
-                <Grid item>
-                  <Typography>
-                    <LocationOn color='secondary' />
-                    {run.endLocation}
-                  </Typography>
-                </Grid>
-                <Grid item>
-                  <IconButton>
-                    <Directions />
-                  </IconButton>
-                </Grid>
+          <CardActions>
+            <Grid container spacing={16} alignItems='center'>
+              <Grid item className={classes.actions}>
+                <LocationOn color='primary' />
+                <Typography>{run.startLocation}</Typography>
               </Grid>
-            </CardActions>
-          </div>
+              <Grid item className={classes.actions}>
+                <LocationOn color='secondary' />
+                <Typography>{run.endLocation}</Typography>
+              </Grid>
+              <Grid item>
+                <IconButton>
+                  <Directions />
+                </IconButton>
+              </Grid>
+            </Grid>
+          </CardActions>
         </CardContent>
         <CardActions className={classes.button}>
           {new Date(run.date) - new Date() > 0 ? (
@@ -149,6 +148,7 @@ class RunDetails extends Component {
           )}
         </CardActions>
       </Card>
+      </>
     )
   }
 }

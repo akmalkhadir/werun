@@ -5,19 +5,21 @@ import {
   CardActionArea,
   CardContent,
   CardMedia,
-  Typography
+  Typography,
 } from '@material-ui/core'
-import { Redirect } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
-const styles = {
+const styles = theme => ({
   card: {
-    maxWidth: 345,
-    display: 'flex'
+    maxWidth: 345
   },
   media: {
     objectFit: 'cover'
+  },
+  button: {
+    margin: theme.spacing.unit
   }
-}
+})
 
 class RunCard extends Component {
   state = {
@@ -28,23 +30,25 @@ class RunCard extends Component {
     this.setState({ toRunDetails: true })
   }
 
- 
+  handleLinkClick = props => (
+    <Link
+      to={{
+        pathname: `/runs/${this.props.run.id}`,
+        state: {
+          run: this.props.run
+        }
+      }}
+      {...props}
+    />
+  )
 
   render () {
     const { classes, run, currentUserId } = this.props
-    const { handleClick } = this
-    if (this.state.toRunDetails) {
-      return <Redirect to={{
-      pathname: `/runs/${run.id}`,
-      state: { 
-        run: run,
-        currentUserId
-       }
-      }} />
-    }
+    const { handleLinkClick } = this
+
     return (
-      <Card className={classes.card} onClick={handleClick}>
-        <CardActionArea>
+      <Card className={classes.card}>
+        <CardActionArea component={handleLinkClick}>
           <CardMedia
             component='img'
             alt={run.name}

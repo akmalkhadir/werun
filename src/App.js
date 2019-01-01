@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { CssBaseline } from '@material-ui/core'
 import { Switch, Route } from 'react-router-dom'
+import { isAfter, isBefore } from 'date-fns'
 
 import TopBar from './Components/TopBar'
 import BottomBar from './Components/BottomBar'
@@ -13,6 +14,7 @@ import SearchRunForm from './Containers/SearchRunForm'
 import API from './API'
 
 import './App.css'
+import RunDetailsWithMap from './Containers/RunDetailsWithMap'
 
 class App extends Component {
   state = {
@@ -20,7 +22,7 @@ class App extends Component {
       upcomingRuns: [],
       pastRuns: []
     },
-    currentUserId: 1,
+    currentUserId: 3,
     allRuns: []
   }
 
@@ -29,9 +31,12 @@ class App extends Component {
   }
 
   refreshState = () => {
-    API.getRunnerRuns(this.state.currentUserId)
-      .then(runnerDetails => this.setState({ runnerDetails }))
-      .then(() => API.getAllRuns().then(allRuns => this.setState({ allRuns })))
+    Promise.all([
+      API.getRunnerRuns(this.state.currentUserId),
+      API.getAllRuns()
+    ]).then(([runnerDetails, allRuns]) =>
+      this.setState({ runnerDetails, allRuns })
+    )
   }
 
   futureRuns = () => {
@@ -50,8 +55,20 @@ class App extends Component {
     API.unJoinARun(ids).then(this.refreshState)
   }
 
+  getUpcomingRuns = () => {
+    return this.state.allRuns.filter(run => isAfter(new Date(run.date), new Date()))
+  }
+
+  getPastRuns = () => {
+  return this.state.allRuns.filter(run =>
+    isBefore(new Date(run.date), new Date())
+  )
+}
+
   render () {
     const { runnerDetails, allRuns, currentUserId } = this.state
+
+    console.log('hello')
 
     return (
       <>
@@ -102,9 +119,10 @@ class App extends Component {
                 />
               )}
             />
+            <Route exact path='/test' component={RunDetailsWithMap} />
           </Switch>
         </div>
-        <BottomBar />
+        <BottomBar currentUserId={currentUserId} />
       </>
     )
   }
