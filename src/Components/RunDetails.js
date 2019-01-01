@@ -18,6 +18,7 @@ import {
   Directions
 } from '@material-ui/icons'
 import Api from '../API'
+import MapContainer from '../Containers/MapContainer'
 
 const styles = theme => ({
   root: {
@@ -41,19 +42,23 @@ class RunDetails extends Component {
     runJoined: false
   }
 
+  // I have all runs, i have the id from this props.match.params.id
+
   componentDidMount () {
-    Api.getARun(this.props.match.params.id).then(run => {
+    const run = this.props.runs.find(
+      run => run.id === parseInt(this.props.match.params.id)
+    )
+    const attendeesIds = run.attendees.map(attendee => attendee.id)
+    if (attendeesIds.includes(this.props.currentUserId)) {
+      this.setState({ runJoined: true, run })
+    } else {
       this.setState({ run })
-      const attendeesIds = this.state.run.attendees.map(attendee => attendee.id)
-      if (attendeesIds.includes(this.props.currentUserId)) {
-        this.setState({ runJoined: true })
-      }
-    })
+    }
   }
 
   handleClick = () => {
     let runnerAndRun = {
-      run_id: this.state.run.id,
+      run_id: this.props.match.params.id,
       runner_id: this.props.currentUserId
     }
     if (this.state.runJoined) {
@@ -66,9 +71,13 @@ class RunDetails extends Component {
   }
 
   render () {
+
+    console.log('bello')
+
     const { classes } = this.props
-    const { run } = this.state
     const { handleClick } = this
+    const run =
+      this.state.run === {} ? this.props.location.state.run : this.state.run
     const buttonLabel = this.state.runJoined ? 'UNJOIN' : 'JOIN'
 
     const options = {
@@ -90,6 +99,9 @@ class RunDetails extends Component {
           title={run.name}
         />
         <CardContent>
+          <div>
+            <MapContainer run={run} />
+          </div>
           <div>
             <Typography gutterBottom variant='h5' component='h2'>
               {run.name}
