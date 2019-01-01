@@ -45,15 +45,14 @@ class RunDetails extends Component {
   // I have all runs, i have the id from this props.match.params.id
 
   componentDidMount () {
-    const run = this.props.runs.find(
-      run => run.id === parseInt(this.props.match.params.id)
-    )
-    const attendeesIds = run.attendees.map(attendee => attendee.id)
-    if (attendeesIds.includes(this.props.currentUserId)) {
-      this.setState({ runJoined: true, run })
-    } else {
-      this.setState({ run })
-    }
+    Api.getARun(this.props.match.params.id).then(run => {
+      const attendeesIds = run.attendees.map(attendee => attendee.id)
+      if (attendeesIds.includes(this.props.currentUserId)) {
+        this.setState({ runJoined: true, run })
+      } else {
+        this.setState({ run })
+      }
+    })
   }
 
   handleClick = () => {
@@ -71,13 +70,11 @@ class RunDetails extends Component {
   }
 
   render () {
-
     console.log('bello')
-
+    
     const { classes } = this.props
     const { handleClick } = this
-    const run =
-      this.state.run === {} ? this.props.location.state.run : this.state.run
+    const { run } = this.props.location.state
     const buttonLabel = this.state.runJoined ? 'UNJOIN' : 'JOIN'
 
     const options = {
@@ -90,14 +87,6 @@ class RunDetails extends Component {
     }
     return (
       <Card className={classes.root} elevation={0}>
-        <CardMedia
-          component='img'
-          alt={run.name}
-          className={classes.media}
-          height='280'
-          image='https://static.standard.co.uk/s3fs-public/thumbnails/image/2017/01/22/11/sunrise2201m.jpg'
-          title={run.name}
-        />
         <CardContent>
           <div>
             <MapContainer run={run} />

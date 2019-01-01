@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { CssBaseline } from '@material-ui/core'
 import { Switch, Route } from 'react-router-dom'
+import { isAfter, isBefore } from 'date-fns'
 
 import TopBar from './Components/TopBar'
 import BottomBar from './Components/BottomBar'
@@ -53,6 +54,16 @@ class App extends Component {
   handleUnJoinRun = ids => {
     API.unJoinARun(ids).then(this.refreshState)
   }
+
+  getUpcomingRuns = () => {
+    return this.state.allRuns.filter(run => isAfter(new Date(run.date), new Date()))
+  }
+
+  getPastRuns = () => {
+  return this.state.allRuns.filter(run =>
+    isBefore(new Date(run.date), new Date())
+  )
+}
 
   render () {
     const { runnerDetails, allRuns, currentUserId } = this.state
