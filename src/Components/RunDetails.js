@@ -4,7 +4,6 @@ import {
   Card,
   CardActions,
   CardContent,
-  CardMedia,
   Button,
   Typography,
   Divider,
@@ -73,6 +72,8 @@ class RunDetails extends Component {
     }
   }
 
+  giveDirections
+
   render () {
     console.log('bello')
 
@@ -80,6 +81,8 @@ class RunDetails extends Component {
     const { handleClick } = this
     const { run } = this.props.location.state
     const buttonLabel = this.state.runJoined ? 'UNJOIN' : 'JOIN'
+
+    const citymapperLink = 'https://citymapper.com/directions?endcoord=51.537060%2C-0.079179&endname=The%20Proud%20Archivist&endaddress=2-10%20Hertford%20Road%2C%20London%2C%20N1%205ET'
 
     const options = {
       weekday: 'long',

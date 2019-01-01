@@ -23,7 +23,7 @@ const LocationMap = withScriptjs(
 
     return (
       <GoogleMap
-        defaultZoom={14}
+        defaultZoom={12}
         center={{
           lat: parseFloat(start_coordinates.lat),
           lng: parseFloat(start_coordinates.lng)
