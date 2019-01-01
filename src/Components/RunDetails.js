@@ -23,7 +23,7 @@ import MapContainer from '../Containers/MapContainer'
 const styles = theme => ({
   root: {
     borderRadius: 0,
-    height: '100vh'
+    height: '55vh'
   },
   media: {
     objectFit: 'cover'
@@ -34,6 +34,10 @@ const styles = theme => ({
   },
   actions: {
     display: 'flex'
+  },
+  title: {
+    flexDirection: 'column',
+    alignItems: 'flex-start'
   }
 })
 class RunDetails extends Component {
@@ -71,7 +75,7 @@ class RunDetails extends Component {
 
   render () {
     console.log('bello')
-    
+
     const { classes } = this.props
     const { handleClick } = this
     const { run } = this.props.location.state
@@ -86,53 +90,48 @@ class RunDetails extends Component {
       minute: 'numeric'
     }
     return (
+      <>
+      <MapContainer run={run} />
       <Card className={classes.root} elevation={0}>
         <CardContent>
-          <div>
-            <MapContainer run={run} />
-          </div>
-          <div>
-            <Typography gutterBottom variant='h5' component='h2'>
+          <CardActions className={classes.title}>
+            <Typography align='left' gutterBottom variant='h5' component='h2'>
               {run.name}
             </Typography>
             <Typography component='p'>{run.description}</Typography>
-          </div>
-          <div>
-            <CardActions>
-              <Grid container spacing={16} alignItems='center'>
-                <Grid item className={classes.actions}>
-                  <DirectionsRun />
-                  <Typography>{run.distance}K</Typography>
-                </Grid>
-                <Grid item className={classes.actions}>
-                  <Event />
-                  <Typography>
-                    {new Date(run.date).toLocaleDateString(undefined, options)}
-                  </Typography>
-                </Grid>
+          </CardActions>
+          <CardActions>
+            <Grid container spacing={16} alignItems='center'>
+              <Grid item className={classes.actions}>
+                <DirectionsRun />
+                <Typography>{run.distance}K</Typography>
               </Grid>
-            </CardActions>
-          </div>
+              <Grid item className={classes.actions}>
+                <Event />
+                <Typography>
+                  {new Date(run.date).toLocaleDateString(undefined, options)}
+                </Typography>
+              </Grid>
+            </Grid>
+          </CardActions>
           <Divider />
-          <div>
-            <CardActions>
-              <Grid container spacing={16} alignItems='center'>
-                <Grid item className={classes.actions}>
-                  <LocationOn color='primary' />
-                  <Typography>{run.startLocation}</Typography>
-                </Grid>
-                <Grid item className={classes.actions}>
-                  <LocationOn color='secondary' />
-                  <Typography>{run.endLocation}</Typography>
-                </Grid>
-                <Grid item>
-                  <IconButton>
-                    <Directions />
-                  </IconButton>
-                </Grid>
+          <CardActions>
+            <Grid container spacing={16} alignItems='center'>
+              <Grid item className={classes.actions}>
+                <LocationOn color='primary' />
+                <Typography>{run.startLocation}</Typography>
               </Grid>
-            </CardActions>
-          </div>
+              <Grid item className={classes.actions}>
+                <LocationOn color='secondary' />
+                <Typography>{run.endLocation}</Typography>
+              </Grid>
+              <Grid item>
+                <IconButton>
+                  <Directions />
+                </IconButton>
+              </Grid>
+            </Grid>
+          </CardActions>
         </CardContent>
         <CardActions className={classes.button}>
           {new Date(run.date) - new Date() > 0 ? (
@@ -146,6 +145,7 @@ class RunDetails extends Component {
           )}
         </CardActions>
       </Card>
+      </>
     )
   }
 }

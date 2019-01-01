@@ -10,22 +10,22 @@ class MapContainer extends Component {
         loadingElement={
           <div
             style={{
-              height: '40vh'
+              height: '50vh'
             }}
           />
         }
         containerElement={
           <div
             style={{
-              height: '40vw',
-              width: 'vw'
+              height: '50vh',
+              width: '100vw'
             }}
           />
         }
         mapElement={
           <div
             style={{
-              height: '40vh'
+              height: '50vh'
             }}
           />
         }
