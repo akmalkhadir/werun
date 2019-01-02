@@ -7,14 +7,12 @@ import {
   Button,
   Typography,
   Divider,
-  Grid,
-  IconButton
+  Grid
 } from '@material-ui/core'
 import {
   DirectionsRun,
   Event,
-  LocationOn,
-  Directions
+  LocationOn
 } from '@material-ui/icons'
 import Api from '../API'
 import MapContainer from '../Containers/MapContainer'
@@ -125,11 +123,6 @@ class RunDetails extends Component {
                 <Grid item className={classes.actions}>
                   <LocationOn color='secondary' />
                   <Typography>{run.endLocation}</Typography>
-                </Grid>
-                <Grid item>
-                  <IconButton>
-                    <Directions />
-                  </IconButton>
                 </Grid>
               </Grid>
             </CardActions>
