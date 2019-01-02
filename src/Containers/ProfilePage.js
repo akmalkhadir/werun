@@ -15,7 +15,8 @@ import { DirectionsRun, LocationCity, Group } from '@material-ui/icons'
 const styles = theme => ({
   root: {
     borderRadius: 0,
-    height: '84vh'
+    height: '81vh',
+    margin: '10px'
   },
   actions: {
     display: 'flex',
@@ -50,13 +51,14 @@ class ProfilePage extends Component {
     console.log('mello')
     return (
       <>
-        <Card className={classes.root} elevation={0}>
+        <Card className={classes.root} elevation={1}>
           <CardContent>
             <CardActions className={classes.title}>
               <Avatar
                 alt={runner.name}
                 src={runner.image_url}
                 className={classes.avatar}
+                elevation={1}
               />
               <Typography variant='h4' color='primary'>
                 {runner.name}
@@ -80,12 +82,10 @@ class ProfilePage extends Component {
             </CardActions>
             <Divider />
             <CardActions className={classes.stats}>
-              <Typography gutterBottom variant='h5'>Overview</Typography>
-              <Grid
-                container
-                justify='space-around'
-                spacing={24}
-              >
+              <Typography gutterBottom variant='h5'>
+                Overview
+              </Typography>
+              <Grid container justify='space-around' spacing={24}>
                 <Grid item className={classes.actions}>
                   <DirectionsRun className={classes.icons} />
                   <Typography>83 km</Typography>
