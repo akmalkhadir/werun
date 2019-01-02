@@ -13,6 +13,7 @@ import { MuiPickersUtilsProvider, DateTimePicker } from 'material-ui-pickers'
 import DateFnsUtils from '@date-io/date-fns'
 import API from '../API'
 import { Redirect } from 'react-router-dom'
+import LocationInput from '../Components/LocationInput'
 
 const styles = theme => ({
   container: {
@@ -28,19 +29,23 @@ const styles = theme => ({
   toggle: {
     display: 'flex',
     alignItems: 'center'
-  },
+  }
 })
 
 class CreateRunForm extends Component {
   state = {
     name: ``,
     description: ``,
-    start: ``,
-    end: ``,
+    start_location: ``,
+    end_location: ``,
     date: new Date(),
     distance: ``,
     is_private: false,
     toRunDetails: false,
+    start_lat: 0,
+    start_lng: 0,
+    end_lat: 0,
+    end_lng: 0,
     createdRun: {}
   }
 
@@ -58,15 +63,35 @@ class CreateRunForm extends Component {
     this.setState({ [name]: event.target.checked })
   }
 
+  setStartCoordinates = (start_lat, start_lng) => {
+    this.setState({ start_lat, start_lng })
+  }
+
+  setStartLocation = start_location => {
+    this.setState({ start_location })
+  }
+
+  setEndCoordinates = (end_lat, end_lng) => {
+    this.setState({ end_lat, end_lng })
+  }
+
+  setEndLocation = end_location => {
+    this.setState({ end_location })
+  }
+
   handleClick = () => {
     const {
       name,
       description,
-      start,
-      end,
+      start_location,
+      end_location,
       date,
       distance,
-      is_private
+      is_private,
+      start_lat,
+      start_lng,
+      end_lat,
+      end_lng
     } = this.state
 
     const { currentUserId } = this.props
@@ -74,11 +99,15 @@ class CreateRunForm extends Component {
     const run = {
       name: name,
       description: description,
-      start_location: start,
-      end_location: end,
+      start_location: start_location,
+      end_location: end_location,
       distance: parseInt(distance),
       date: date,
       is_private: is_private,
+      start_lat: start_lat,
+      start_lng: start_lng,
+      end_lat: end_lat,
+      end_lng: end_lng,
       runner_id: currentUserId
     }
 
@@ -112,6 +141,7 @@ class CreateRunForm extends Component {
                 required
                 id='name'
                 label='Name'
+                placeholder='Name your run'
                 value={this.state.name}
                 onChange={this.handleChange('name')}
                 margin='normal'
@@ -123,6 +153,7 @@ class CreateRunForm extends Component {
               <TextField
                 id='description'
                 label='Description'
+                placeholder='bvfdjavbdvbdlkabvkdjbvdbdkv'
                 value={this.state.description}
                 onChange={this.handleChange('description')}
                 margin='normal'
@@ -147,26 +178,22 @@ class CreateRunForm extends Component {
             </Grid>
 
             <Grid item>
-              <TextField
-                fullWidth
+              <LocationInput
                 id='start'
-                label='Start Location'
-                value={this.state.start}
-                onChange={this.handleChange('start')}
-                margin='normal'
-                variant='filled'
+                label='Start Makanan'
+                value={this.state.start_location}
+                setCoordinates={this.setStartCoordinates}
+                setAddress={this.setStartLocation}
               />
             </Grid>
 
             <Grid item>
-              <TextField
-                fullWidth
+              <LocationInput
                 id='end'
-                label='End Location'
-                value={this.state.end}
-                onChange={this.handleChange('end')}
-                margin='normal'
-                variant='filled'
+                label='End Makanan'
+                value={this.state.end_location}
+                setCoordinates={this.setEndCoordinates}
+                setAddress={this.setEndLocation}
               />
             </Grid>
 
@@ -204,10 +231,9 @@ class CreateRunForm extends Component {
                 fullWidth
               >
                 HOST RUN
-          </Button>
+              </Button>
             </Grid>
           </Grid>
-         
         </form>
       </Paper>
     )

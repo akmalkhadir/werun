@@ -8,12 +8,13 @@ import RunDetails from './Components/RunDetails'
 
 import HomeTabs from './Containers/HomeTabs'
 import RunsPage from './Containers/RunsPage'
-import RunForm from './Containers/RunForm'
+import RunForm from './Containers/CreateRunForm'
 import SearchRunForm from './Containers/SearchRunForm'
 import API from './API'
 
 import './App.css'
-import ProfilePage from './Containers/ProfilePage';
+import ProfilePage from './Containers/ProfilePage'
+import LocationInput from './Components/LocationInput';
 
 class App extends Component {
   state = {
@@ -125,6 +126,11 @@ class App extends Component {
               render={props => (
                 <ProfilePage {...props} runner={runnerDetails} />
               )}
+            />
+            <Route
+              exact
+              path='/testpage'
+              component={LocationInput}
             />
           </Switch>
         </div>
