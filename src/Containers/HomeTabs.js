@@ -12,7 +12,8 @@ const JoinLink = props => <Link to='/runs' {...props} />
 
 const styles = theme => ({
   root: {
-    backgroundColor: theme.palette.background.paper
+    backgroundColor: theme.palette.background.paper, 
+    height: 'auto'
   },
   fab: {
     position: 'absolute',

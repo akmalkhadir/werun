@@ -1,18 +1,19 @@
 import React, { Component } from 'react'
-import { CssBaseline } from '@material-ui/core'
 import { Switch, Route } from 'react-router-dom'
+import { isAfter, isBefore } from 'date-fns'
 
 import TopBar from './Components/TopBar'
 import BottomBar from './Components/BottomBar'
 import RunDetails from './Components/RunDetails'
 
 import HomeTabs from './Containers/HomeTabs'
-import RunsContainer from './Containers/RunsContainer'
+import RunsPage from './Containers/RunsPage'
 import RunForm from './Containers/RunForm'
 import SearchRunForm from './Containers/SearchRunForm'
 import API from './API'
 
 import './App.css'
+import ProfilePage from './Containers/ProfilePage';
 
 class App extends Component {
   state = {
@@ -20,7 +21,7 @@ class App extends Component {
       upcomingRuns: [],
       pastRuns: []
     },
-    currentUserId: 1,
+    currentUserId: 21,
     allRuns: []
   }
 
@@ -29,9 +30,12 @@ class App extends Component {
   }
 
   refreshState = () => {
-    API.getRunnerRuns(this.state.currentUserId)
-      .then(runnerDetails => this.setState({ runnerDetails }))
-      .then(() => API.getAllRuns().then(allRuns => this.setState({ allRuns })))
+    Promise.all([
+      API.getRunnerRuns(this.state.currentUserId),
+      API.getAllRuns()
+    ]).then(([runnerDetails, allRuns]) =>
+      this.setState({ runnerDetails, allRuns })
+    )
   }
 
   futureRuns = () => {
@@ -50,18 +54,31 @@ class App extends Component {
     API.unJoinARun(ids).then(this.refreshState)
   }
 
+  getUpcomingRuns = () => {
+    return this.state.allRuns.filter(run =>
+      isAfter(new Date(run.date), new Date())
+    )
+  }
+
+  getPastRuns = () => {
+    return this.state.allRuns.filter(run =>
+      isBefore(new Date(run.date), new Date())
+    )
+  }
+
   render () {
     const { runnerDetails, allRuns, currentUserId } = this.state
 
+    console.log('hello')
+
     return (
       <>
-        <CssBaseline />
-        <TopBar position='fixed' />
+        <TopBar runner={runnerDetails} position='fixed' />
         <div className='content_container'>
           <Switch>
             <Route
               exact
-              path='/runners/:id'
+              path='/'
               render={props => (
                 <HomeTabs {...props} runnerDetails={runnerDetails} />
               )}
@@ -70,7 +87,7 @@ class App extends Component {
               exact
               path='/runs'
               component={props => (
-                <RunsContainer
+                <RunsPage
                   {...props}
                   runs={this.futureRuns()}
                   currentUserId={currentUserId}
@@ -102,9 +119,16 @@ class App extends Component {
                 />
               )}
             />
+            <Route
+              exact
+              path='/runners/:id'
+              render={props => (
+                <ProfilePage {...props} runner={runnerDetails} />
+              )}
+            />
           </Switch>
         </div>
-        <BottomBar />
+        <BottomBar currentUserId={currentUserId} />
       </>
     )
   }

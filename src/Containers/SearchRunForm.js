@@ -1,122 +1,98 @@
 import React, { Component } from 'react'
 import { withStyles } from '@material-ui/core/styles'
-import { TextField, Grid, Button } from '@material-ui/core'
-import { CalendarToday, CompareArrows, Search } from '@material-ui/icons'
+import {
+  Grid,
+  Button
+} from '@material-ui/core'
 
-import DateFnsUtils from '@date-io/date-fns'
-import { MuiPickersUtilsProvider, DateTimePicker } from 'material-ui-pickers'
+
 import { Link } from 'react-router-dom'
+import LocationSearch from '../Components/LocationSearch'
 
 const styles = theme => ({
-  container: {
-    display: 'flex',
-    flexWrap: 'wrap',
-    margin: theme.spacing.unit
-  },
-  textField: {
-    marginLeft: theme.spacing.unit,
-    marginRight: theme.spacing.unit
-  },
   button: {
     justifyContent: 'space-around',
     margin: theme.spacing.unit
   },
-  dense: {
-    marginTop: 16
+  root: {
+    padding: '2px 4px',
+    display: 'flex',
+    alignItems: 'center',
+    width: 'auto',
+    margin: theme.spacing.unit
   },
-  menu: {
-    width: 200
+  box: {
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+  paper: {
+    width: '240px',
+    margin: theme.spacing.unit
+  },
+  input: {
+    marginLeft: 8,
+    flex: 1
+  },
+  iconButton: {
+    padding: 10
+  },
+  card: {
+    maxWidth: 170
+  },
+  media: {
+    height: '100%'
   }
 })
 
-class CreateRunForm extends Component {
+class SearchRunForm extends Component {
   state = {
-    searchTerm: ``,
     date: new Date(),
-    distance: ``
+    address: '',
+    lat: 0,
+    lng: 0
   }
 
-  handleChange = name => event => {
-    this.setState({
-      [name]: event.target.value
-    })
+  setCoordinates = (lat, lng) => {
+    this.setState({ lat, lng })
   }
 
-  handleDateChange = date => {
-    this.setState({ date })
+  setAddress = address => {
+    this.setState({ address })
   }
 
-  redirectToRuns = (props) => <Link to='/runs' {...props} />
+  redirectToRuns = props => (
+    <Link
+      to={{
+        pathname: '/runs',
+        state: { lat: this.state.lat, lng: this.state.lng }
+      }}
+      {...props}
+    />
+  )
 
   render () {
     const { classes } = this.props
-    const { date } = this.state
     return (
-      <form className={classes.container} noValidate autoComplete='off'>
-        <Grid container spacing={0} alignItems='center'>
-          <Grid item>
-            <Search fontSize='large' color='action' />
-          </Grid>
-          <Grid item>
-            <TextField
-              id='searchTerm'
-              label='Search'
-              className={classes.textField}
-              value={this.state.searchTerm}
-              onChange={this.handleChange('searchTerm')}
-              margin='normal'
-              variant='filled'
-            />
-          </Grid>
-        </Grid>
-        <Grid container spacing={0} alignItems='center'>
-          <Grid item>
-            <CalendarToday fontSize='large' color='action' />
-          </Grid>
-          <Grid item>
-            <MuiPickersUtilsProvider utils={DateFnsUtils}>
-              <DateTimePicker
-                variant='filled'
-                label='Date'
-                format='d MMM yyyy | h:mm aa'
-                className={classes.textField}
-                value={date}
-                onChange={this.handleDateChange}
-              />
-            </MuiPickersUtilsProvider>
-          </Grid>
-        </Grid>
-        <Grid container spacing={0} alignItems='center'>
-          <Grid item>
-            <CompareArrows fontSize='large' color='action' />
-          </Grid>
-          <Grid item>
-            <TextField
-              id='distance'
-              label='Distance'
-              className={classes.textField}
-              value={this.state.distance}
-              onChange={this.handleChange('distance')}
-              margin='normal'
-              variant='filled'
-            />
-          </Grid>
-        </Grid>
+      <>
+        <LocationSearch
+          setCoordinates={this.setCoordinates}
+          setAddress={this.setAddress}
+        />
         <Grid container className={classes.button}>
           <Grid item>
-            <Button size='large' variant='contained' color='primary'>
-              SEARCH
-            </Button>
-          </Grid>
-          <Grid item>
-            <Button component={this.redirectToRuns} size='large' variant='contained' color='primary'>
-              VIEW ALL RUNS
+            <Button
+              component={this.redirectToRuns}
+              size='large'
+              variant='contained'
+              color='primary'
+            >
+              DISCOVER
             </Button>
           </Grid>
         </Grid>
-      </form>
+      </>
     )
   }
 }
 
-export default withStyles(styles)(CreateRunForm)
+export default withStyles(styles)(SearchRunForm)

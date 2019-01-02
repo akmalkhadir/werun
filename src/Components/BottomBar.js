@@ -4,7 +4,7 @@ import {
   BottomNavigationAction,
   withStyles
 } from '@material-ui/core'
-import { Event, People, Person } from '@material-ui/icons'
+import { Event, Person, Search } from '@material-ui/icons'
 import { Link } from 'react-router-dom'
 
 const styles = {
@@ -20,18 +20,25 @@ class BottomBar extends Component {
     value: 0
   }
 
-  handleChange = (event, value) => 
-    this.setState({ value })
-  
+  handleChange = (event, value) => this.setState({ value })
 
- redirectToRuns = (props) => {
-     return <Link to='/runners/1' {...props} />
- }
+  redirectToRuns = props => {
+    return <Link to={`/`} {...props} />
+  }
 
+  redirectToDiscover = props => {
+    return <Link to='/runs/search' {...props} />
+  }
+
+  redirectToProfile = (props) => {
+    const { currentUserId } = this.props
+    return <Link to={`/runners/${currentUserId}`} {...props} />
+  }
 
   render () {
     const { classes } = this.props
-    const { value} = this.state
+    const { value } = this.state
+    const { redirectToDiscover, redirectToRuns, redirectToProfile } = this
 
     return (
       <BottomNavigation
@@ -40,9 +47,21 @@ class BottomBar extends Component {
         className={classes.root}
         showLabels
       >
-        <BottomNavigationAction component={this.redirectToRuns} label='My Runs' icon={<Event />} />
-        <BottomNavigationAction label='Groups' icon={<People />} />
-        <BottomNavigationAction label='Profile' icon={<Person />} />
+        <BottomNavigationAction
+          component={redirectToRuns}
+          label='My Runs'
+          icon={<Event />}
+        />
+        <BottomNavigationAction
+          component={redirectToDiscover}
+          label='Discover'
+          icon={<Search />}
+        />
+        <BottomNavigationAction
+          component={redirectToProfile}
+          label='Profile'
+          icon={<Person />}
+        />
       </BottomNavigation>
     )
   }
