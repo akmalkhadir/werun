@@ -1,6 +1,14 @@
 import React, { Component } from 'react'
 import { withStyles } from '@material-ui/core/styles'
-import { TextField, Grid, Button, Switch, Typography, Paper, InputAdornment } from '@material-ui/core'
+import {
+  TextField,
+  Grid,
+  Button,
+  Switch,
+  Typography,
+  Paper,
+  InputAdornment
+} from '@material-ui/core'
 import { MuiPickersUtilsProvider, DateTimePicker } from 'material-ui-pickers'
 import DateFnsUtils from '@date-io/date-fns'
 import API from '../API'
@@ -8,21 +16,19 @@ import { Redirect } from 'react-router-dom'
 
 const styles = theme => ({
   container: {
-    margin: theme.spacing.unit
+    height: 'auto'
   },
   form: {
-    margin: theme.spacing.unit
+    padding: theme.spacing.unit * 2
   },
   button: {
-    justifyContent: 'flex-start'
+    textAlign: 'center',
+    marginBottom: '10px'
   },
   toggle: {
     display: 'flex',
     alignItems: 'center'
   },
-  menu: {
-    width: 200
-  }
 })
 
 class CreateRunForm extends Component {
@@ -103,7 +109,7 @@ class CreateRunForm extends Component {
           <Grid container direction='column' spacing={0} justify='center'>
             <Grid item>
               <TextField
-              required
+                required
                 id='name'
                 label='Name'
                 value={this.state.name}
@@ -124,7 +130,6 @@ class CreateRunForm extends Component {
                 multiline
                 rows='4'
                 fullWidth
-                
               />
             </Grid>
 
@@ -175,11 +180,12 @@ class CreateRunForm extends Component {
                 margin='normal'
                 variant='filled'
                 InputProps={{
-                  endAdornment: <InputAdornment position="end">KM</InputAdornment>,
+                  endAdornment: (
+                    <InputAdornment position='end'>KM</InputAdornment>
+                  )
                 }}
               />
             </Grid>
-
             <Grid item className={classes.toggle}>
               <Typography variant='body2'>Mark as Private?</Typography>
               <Switch
@@ -188,17 +194,20 @@ class CreateRunForm extends Component {
                 value='is_private'
               />
             </Grid>
-            <Grid item>
+            <Grid item className={classes.button}>
               <Button
+                className={classes.button}
                 onClick={this.handleClick}
                 size='large'
                 variant='contained'
                 color='primary'
+                fullWidth
               >
-                CREATE RUN
-            </Button>
+                HOST RUN
+          </Button>
             </Grid>
           </Grid>
+         
         </form>
       </Paper>
     )
