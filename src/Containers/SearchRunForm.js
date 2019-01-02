@@ -2,13 +2,9 @@ import React, { Component } from 'react'
 import { withStyles } from '@material-ui/core/styles'
 import {
   Grid,
-  Button,
-  Card,
-  CardActionArea,
-  CardMedia
+  Button
 } from '@material-ui/core'
-import icon5k from '../images/icons-5k.svg'
-import icon10k from '../images/icons-10k.svg'
+
 
 import { Link } from 'react-router-dom'
 import LocationSearch from '../Components/LocationSearch'
@@ -82,56 +78,6 @@ class SearchRunForm extends Component {
           setCoordinates={this.setCoordinates}
           setAddress={this.setAddress}
         />
-        <Grid className={classes.box} spacing={16} container>
-          <Grid item>
-            <Card className={classes.card}>
-              <CardActionArea>
-                <CardMedia
-                  component='img'
-                  className={classes.media}
-                  image={icon5k}
-                  title='5K'
-                />
-              </CardActionArea>
-            </Card>
-          </Grid>
-          <Grid item>
-            <Card className={classes.card}>
-              <CardActionArea>
-                <CardMedia
-                  component='img'
-                  className={classes.media}
-                  image={icon10k}
-                  title='10K'
-                />
-              </CardActionArea>
-            </Card>
-          </Grid>
-          <Grid item>
-            <Card className={classes.card}>
-              <CardActionArea>
-                <CardMedia
-                  component='img'
-                  className={classes.media}
-                  image={icon5k}
-                  title='5K'
-                />
-              </CardActionArea>
-            </Card>
-          </Grid>
-          <Grid item>
-            <Card className={classes.card}>
-              <CardActionArea>
-                <CardMedia
-                  component='img'
-                  className={classes.media}
-                  image={icon10k}
-                  title='10K'
-                />
-              </CardActionArea>
-            </Card>
-          </Grid>
-        </Grid>
         <Grid container className={classes.button}>
           <Grid item>
             <Button

@@ -43,7 +43,7 @@ class RunCard extends Component {
   )
 
   render () {
-    const { classes, run, currentUserId } = this.props
+    const { classes, run } = this.props
     const { handleLinkClick } = this
 
     return (

@@ -1,14 +1,6 @@
 import React, { Component } from 'react'
 import { withStyles } from '@material-ui/core/styles'
 import { TextField, Grid, Button, Switch, Typography } from '@material-ui/core'
-import {
-  AccountCircle,
-  Description,
-  CalendarToday,
-  AddLocation,
-  LocationOn,
-  CompareArrows
-} from '@material-ui/icons'
 import { MuiPickersUtilsProvider, DateTimePicker } from 'material-ui-pickers'
 import DateFnsUtils from '@date-io/date-fns'
 import API from '../API'
@@ -110,9 +102,7 @@ class CreateRunForm extends Component {
     return (
       <form className={classes.container} noValidate autoComplete='off'>
         <Grid container spacing={0} alignItems='center'>
-          <Grid item>
-            <AccountCircle fontSize='large' color='action' />
-          </Grid>
+          
           <Grid item>
             <TextField
               id='name'
@@ -126,9 +116,7 @@ class CreateRunForm extends Component {
           </Grid>
         </Grid>
         <Grid container spacing={0} alignItems='center'>
-          <Grid item>
-            <Description fontSize='large' color='action' />
-          </Grid>
+          
           <Grid item>
             <TextField
               id='description'
@@ -139,13 +127,12 @@ class CreateRunForm extends Component {
               margin='normal'
               variant='filled'
               multiline
+              rows='4'
             />
           </Grid>
         </Grid>
         <Grid container spacing={0} alignItems='center'>
-          <Grid item>
-            <CalendarToday fontSize='large' color='action' />
-          </Grid>
+          
           <Grid item>
             <MuiPickersUtilsProvider utils={DateFnsUtils}>
               <DateTimePicker
@@ -161,9 +148,6 @@ class CreateRunForm extends Component {
         </Grid>
         <Grid container spacing={0} alignItems='center'>
           <Grid item>
-            <AddLocation fontSize='large' color='action' />
-          </Grid>
-          <Grid item>
             <TextField
               id='start'
               label='Start Location'
@@ -177,9 +161,6 @@ class CreateRunForm extends Component {
         </Grid>
         <Grid container spacing={0} alignItems='center'>
           <Grid item>
-            <LocationOn fontSize='large' color='action' />
-          </Grid>
-          <Grid item>
             <TextField
               id='end'
               label='End Location'
@@ -192,9 +173,6 @@ class CreateRunForm extends Component {
           </Grid>
         </Grid>
         <Grid container spacing={0} alignItems='center'>
-          <Grid item>
-            <CompareArrows fontSize='large' color='action' />
-          </Grid>
           <Grid item>
             <TextField
               id='distance'
