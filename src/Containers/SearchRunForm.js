@@ -13,34 +13,6 @@ const styles = theme => ({
   button: {
     justifyContent: 'space-around',
     margin: theme.spacing.unit
-  },
-  root: {
-    padding: '2px 4px',
-    display: 'flex',
-    alignItems: 'center',
-    width: 'auto',
-    margin: theme.spacing.unit
-  },
-  box: {
-    alignItems: 'center',
-    justifyContent: 'center'
-  },
-  paper: {
-    width: '240px',
-    margin: theme.spacing.unit
-  },
-  input: {
-    marginLeft: 8,
-    flex: 1
-  },
-  iconButton: {
-    padding: 10
-  },
-  card: {
-    maxWidth: 170
-  },
-  media: {
-    height: '100%'
   }
 })
 
