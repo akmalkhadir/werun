@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import { CssBaseline } from '@material-ui/core'
 import { Switch, Route } from 'react-router-dom'
 import { isAfter, isBefore } from 'date-fns'
 
@@ -74,7 +73,6 @@ class App extends Component {
 
     return (
       <>
-        <CssBaseline />
         <TopBar runner={runnerDetails} position='fixed' />
         <div className='content_container'>
           <Switch>

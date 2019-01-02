@@ -8,18 +8,14 @@ import {
   Typography,
   Divider,
   Grid,
-  IconButton,
   Avatar
 } from '@material-ui/core'
-import {
-  LocationOn,
-  Directions
-} from '@material-ui/icons'
+import { DirectionsRun, LocationCity, Group } from '@material-ui/icons'
 
 const styles = theme => ({
   root: {
     borderRadius: 0,
-    height: '90vh'
+    height: '84vh'
   },
   actions: {
     display: 'flex',
@@ -35,6 +31,16 @@ const styles = theme => ({
     margin: 15,
     width: '40vw',
     height: '40vw'
+  },
+  icons: {
+    fontSize: '48px',
+    color: '#172a60'
+  },
+  stats: {
+    marginTop: '2vh',
+    flexDirection: 'column',
+    alignItems: 'center',
+    textAlign: 'center'
   }
 })
 
@@ -55,14 +61,13 @@ class ProfilePage extends Component {
               <Typography variant='h4' color='primary'>
                 {runner.name}
               </Typography>
+              <Typography variant='body1' color='primary'>
+                {runner.city}
+              </Typography>
               <Typography variant='body2'>{runner.bio}</Typography>
             </CardActions>
             <CardActions>
-              <Grid
-                container
-                spacing={16}
-                justify='space-around'
-              >
+              <Grid container spacing={16} justify='space-around'>
                 <Grid item className={classes.actions}>
                   <Typography variant='subtitle2'>Runs Hosted</Typography>
                   <Typography variant='body1'>18</Typography>
@@ -74,20 +79,24 @@ class ProfilePage extends Component {
               </Grid>
             </CardActions>
             <Divider />
-            <CardActions>
-              <Grid container spacing={16}>
+            <CardActions className={classes.stats}>
+              <Typography gutterBottom variant='h5'>Overview</Typography>
+              <Grid
+                container
+                justify='space-around'
+                spacing={24}
+              >
                 <Grid item className={classes.actions}>
-                  <LocationOn color='primary' />
-                  <Typography>{runner.startLocation}</Typography>
+                  <DirectionsRun className={classes.icons} />
+                  <Typography>83 km</Typography>
                 </Grid>
                 <Grid item className={classes.actions}>
-                  <LocationOn color='secondary' />
-                  <Typography>{runner.endLocation}</Typography>
+                  <LocationCity className={classes.icons} />
+                  <Typography>5 cities</Typography>
                 </Grid>
-                <Grid item>
-                  <IconButton>
-                    <Directions />
-                  </IconButton>
+                <Grid item className={classes.actions}>
+                  <Group className={classes.icons} />
+                  <Typography>657 friends</Typography>
                 </Grid>
               </Grid>
             </CardActions>
