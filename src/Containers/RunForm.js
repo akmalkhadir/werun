@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { withStyles } from '@material-ui/core/styles'
-import { TextField, Grid, Button, Switch, Typography } from '@material-ui/core'
+import { TextField, Grid, Button, Switch, Typography, Paper, InputAdornment } from '@material-ui/core'
 import { MuiPickersUtilsProvider, DateTimePicker } from 'material-ui-pickers'
 import DateFnsUtils from '@date-io/date-fns'
 import API from '../API'
@@ -8,19 +8,17 @@ import { Redirect } from 'react-router-dom'
 
 const styles = theme => ({
   container: {
-    display: 'flex',
-    flexWrap: 'wrap',
     margin: theme.spacing.unit
   },
-  textField: {
-    marginLeft: theme.spacing.unit,
-    marginRight: theme.spacing.unit
+  form: {
+    margin: theme.spacing.unit
   },
   button: {
     justifyContent: 'flex-start'
   },
-  dense: {
-    marginTop: 16
+  toggle: {
+    display: 'flex',
+    alignItems: 'center'
   },
   menu: {
     width: 200
@@ -100,116 +98,109 @@ class CreateRunForm extends Component {
     }
 
     return (
-      <form className={classes.container} noValidate autoComplete='off'>
-        <Grid container spacing={0} alignItems='center'>
-          
-          <Grid item>
-            <TextField
-              id='name'
-              label='Name'
-              className={classes.textField}
-              value={this.state.name}
-              onChange={this.handleChange('name')}
-              margin='normal'
-              variant='filled'
-            />
-          </Grid>
-        </Grid>
-        <Grid container spacing={0} alignItems='center'>
-          
-          <Grid item>
-            <TextField
-              id='description'
-              label='Description'
-              className={classes.textField}
-              value={this.state.description}
-              onChange={this.handleChange('description')}
-              margin='normal'
-              variant='filled'
-              multiline
-              rows='4'
-            />
-          </Grid>
-        </Grid>
-        <Grid container spacing={0} alignItems='center'>
-          
-          <Grid item>
-            <MuiPickersUtilsProvider utils={DateFnsUtils}>
-              <DateTimePicker
+      <Paper className={classes.container} elevation={0}>
+        <form noValidate autoComplete='off' className={classes.form}>
+          <Grid container direction='column' spacing={0} justify='center'>
+            <Grid item>
+              <TextField
+              required
+                id='name'
+                label='Name'
+                value={this.state.name}
+                onChange={this.handleChange('name')}
+                margin='normal'
                 variant='filled'
-                label='Date'
-                format='d MMM yyyy | h:mm aa'
-                className={classes.textField}
-                value={date}
-                onChange={this.handleDateChange}
+                fullWidth
               />
-            </MuiPickersUtilsProvider>
-          </Grid>
-        </Grid>
-        <Grid container spacing={0} alignItems='center'>
-          <Grid item>
-            <TextField
-              id='start'
-              label='Start Location'
-              className={classes.textField}
-              value={this.state.start}
-              onChange={this.handleChange('start')}
-              margin='normal'
-              variant='filled'
-            />
-          </Grid>
-        </Grid>
-        <Grid container spacing={0} alignItems='center'>
-          <Grid item>
-            <TextField
-              id='end'
-              label='End Location'
-              className={classes.textField}
-              value={this.state.end}
-              onChange={this.handleChange('end')}
-              margin='normal'
-              variant='filled'
-            />
-          </Grid>
-        </Grid>
-        <Grid container spacing={0} alignItems='center'>
-          <Grid item>
-            <TextField
-              id='distance'
-              label='Distance'
-              className={classes.textField}
-              value={this.state.distance}
-              onChange={this.handleChange('distance')}
-              margin='normal'
-              variant='filled'
-            />
-          </Grid>
-        </Grid>
-        <Grid container spacing={0} alignItems='center'>
-          <Grid item>
-            <Typography>Mark as Private?</Typography>
-          </Grid>
-          <Grid item>
-            <Switch
-              checked={this.state.is_private}
-              onChange={this.handleToggleChange('is_private')}
-              value='is_private'
-            />
-          </Grid>
-        </Grid>
-        <Grid container className={classes.button}>
-          <Grid item>
-            <Button
-              onClick={this.handleClick}
-              size='large'
-              variant='contained'
-              color='primary'
-            >
-              CREATE RUN
+            </Grid>
+            <Grid item>
+              <TextField
+                id='description'
+                label='Description'
+                value={this.state.description}
+                onChange={this.handleChange('description')}
+                margin='normal'
+                variant='filled'
+                multiline
+                rows='4'
+                fullWidth
+                
+              />
+            </Grid>
+
+            <Grid item>
+              <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                <DateTimePicker
+                  fullWidth
+                  variant='filled'
+                  label='Date'
+                  format='d MMM yyyy | h:mm aa'
+                  value={date}
+                  onChange={this.handleDateChange}
+                />
+              </MuiPickersUtilsProvider>
+            </Grid>
+
+            <Grid item>
+              <TextField
+                fullWidth
+                id='start'
+                label='Start Location'
+                value={this.state.start}
+                onChange={this.handleChange('start')}
+                margin='normal'
+                variant='filled'
+              />
+            </Grid>
+
+            <Grid item>
+              <TextField
+                fullWidth
+                id='end'
+                label='End Location'
+                value={this.state.end}
+                onChange={this.handleChange('end')}
+                margin='normal'
+                variant='filled'
+              />
+            </Grid>
+
+            <Grid item>
+              <TextField
+                fullWidth
+                id='distance'
+                label='Distance'
+                value={this.state.distance}
+                onChange={this.handleChange('distance')}
+                margin='normal'
+                variant='filled'
+                InputProps={{
+                  endAdornment: <InputAdornment position="end">KM</InputAdornment>,
+                }}
+              />
+            </Grid>
+
+            <Grid item className={classes.toggle}>
+              <Typography variant='body2'>Mark as Private?</Typography>
+              <Switch
+                checked={this.state.is_private}
+                onChange={this.handleToggleChange('is_private')}
+                value='is_private'
+              />
+            </Grid>
+            <Grid item>
+              <Button
+                onClick={this.handleClick}
+                size='large'
+                variant='contained'
+                color='primary'
+              >
+                CREATE RUN
             </Button>
+            </Grid>
           </Grid>
-        </Grid>
-      </form>
+        </form>
+      </Paper>
     )
   }
 }
