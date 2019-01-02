@@ -2,6 +2,8 @@ import React from 'react'
 import { withScriptjs, withGoogleMap, GoogleMap } from 'react-google-maps'
 import { distance, point, midpoint, getCoord } from '@turf/turf'
 import LocationMarker from './LocationMarker'
+import startMarkerIcon from '../images/startMarkerIcon.svg'
+import endMarkerIcon from '../images/endMarkerIcon.svg'
 
 const LocationMap = withScriptjs(
   withGoogleMap(({ run: { id, start_coordinates, end_coordinates } }) => {
@@ -44,8 +46,8 @@ const LocationMap = withScriptjs(
     console.log(markerDistance)
 
     const markers = [
-      <LocationMarker key={`${id}-startPin`} location={startCoordinates} />,
-      <LocationMarker key={`${id}-endPin`} location={endCoordinates} />
+      <LocationMarker key={`${id}-startPin`} location={startCoordinates} icon={startMarkerIcon} />,
+      <LocationMarker key={`${id}-endPin`} location={endCoordinates} icon={endMarkerIcon} />
     ]
 
     return (
