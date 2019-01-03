@@ -20,8 +20,8 @@ class SearchRunForm extends Component {
   state = {
     date: new Date(),
     address: '',
-    lat: 0,
-    lng: 0
+    lat: 51.520338,
+    lng: -0.087614
   }
 
   setCoordinates = (lat, lng) => {
