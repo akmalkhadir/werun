@@ -4,12 +4,14 @@ import RunsContainer from './RunsContainer'
 import { Divider } from '@material-ui/core'
 import { distance, point } from '@turf/turf'
 import { compareAsc } from 'date-fns'
+import API from '../API'
 
 class RunsPage extends Component {
   state = {
-    sortBy: '',
-    lat: 51.5071778,
-    lng: -0.1277966
+    runs: [],
+    sortBy: 'Nearest Location',
+    lat: 51.520338,
+    lng: -0.087614
   }
 
   calculateDistance = (lat, lng) => {
@@ -35,15 +37,15 @@ class RunsPage extends Component {
     if (state) {
       this.setState({ lat: state.lat, lng: state.lng })
     }
+    API.getAllRuns(runs => this.setState({runs}))
   }
 
   sortRunsByDistance = () => {
-    if (this.props.runs.length > 0) {
-      let sortedRuns = [...this.props.runs].sort(
+    const runs = this.props.runs.length > 0 ? [...this.props.runs] : [...this.state.runs]
+      let sortedRuns = runs.sort(
         (a, b) => this.getRunDistance(a) - this.getRunDistance(b)
       )
       return sortedRuns
-    }
   }
 
   sortRunsByDate = () => {
@@ -58,8 +60,9 @@ class RunsPage extends Component {
   // depending on coordinates set in state, filter this.props runs within 20k radius, then sort by ascending distance, then pass runs, to runs
 
   render () {
+    console.log('wello')
     const { runs, currentUserId } = this.props
-    const runsToDisplay = runs => {
+    const runsToDisplay = (runs) => {
       switch (this.state.sortBy) {
         case 'Nearest Location':
           return this.sortRunsByDistance()
@@ -72,7 +75,7 @@ class RunsPage extends Component {
 
     return (
       <div>
-        <SortInput setSortBy={this.setSortBy} />
+        <SortInput setSortBy={this.setSortBy} location={this.props.location.state.address} />
         <Divider />
         <RunsContainer
           runs={runsToDisplay(runs)}

@@ -30,7 +30,7 @@ const ITEM_HEIGHT = 48
 
 class SortInput extends Component {
   state = {
-    sort: '',
+    sort: 'Nearest Location',
     open: false,
     anchorEl: null
   }
@@ -56,7 +56,7 @@ class SortInput extends Component {
         case 'Date':
           return 'Date'
         case 'Nearest Location':
-          return 'Nearest Location'
+          return `Nearest Location`
         default:
           return ''
       }

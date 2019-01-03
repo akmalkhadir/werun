@@ -180,7 +180,7 @@ class CreateRunForm extends Component {
             <Grid item>
               <LocationInput
                 id='start'
-                label='Start Makanan'
+                label='Start Location'
                 value={this.state.start_location}
                 setCoordinates={this.setStartCoordinates}
                 setAddress={this.setStartLocation}
@@ -190,7 +190,7 @@ class CreateRunForm extends Component {
             <Grid item>
               <LocationInput
                 id='end'
-                label='End Makanan'
+                label='End Location'
                 value={this.state.end_location}
                 setCoordinates={this.setEndCoordinates}
                 setAddress={this.setEndLocation}

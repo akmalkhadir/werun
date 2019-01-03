@@ -6,6 +6,7 @@ import {
   CardContent,
   CardMedia,
   Typography,
+  Slide,
 } from '@material-ui/core'
 import { Link } from 'react-router-dom'
 
@@ -47,6 +48,7 @@ class RunCard extends Component {
     const { handleLinkClick } = this
 
     return (
+      <Slide direction='right' in mountOnEnter unmountOnExit timeout={500}>
       <Card className={classes.card}>
         <CardActionArea component={handleLinkClick}>
           <CardMedia
@@ -65,6 +67,7 @@ class RunCard extends Component {
           </CardContent>
         </CardActionArea>
       </Card>
+      </Slide>
     )
   }
 }
