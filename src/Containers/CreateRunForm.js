@@ -108,7 +108,8 @@ class CreateRunForm extends Component {
       start_lng: start_lng,
       end_lat: end_lat,
       end_lng: end_lng,
-      runner_id: currentUserId
+      runner_id: currentUserId,
+      image_url: 'https://storage.googleapis.com/akmalkhadir.com/run-images/marc-rafanell-lopez-393676-unsplash-min.jpg'
     }
 
     API.createNewRun(run).then(createdRun => {
@@ -180,7 +181,7 @@ class CreateRunForm extends Component {
             <Grid item>
               <LocationInput
                 id='start'
-                label='Start Makanan'
+                label='Start Location'
                 value={this.state.start_location}
                 setCoordinates={this.setStartCoordinates}
                 setAddress={this.setStartLocation}
@@ -190,7 +191,7 @@ class CreateRunForm extends Component {
             <Grid item>
               <LocationInput
                 id='end'
-                label='End Makanan'
+                label='End Location'
                 value={this.state.end_location}
                 setCoordinates={this.setEndCoordinates}
                 setAddress={this.setEndLocation}

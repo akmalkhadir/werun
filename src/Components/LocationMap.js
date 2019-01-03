@@ -31,11 +31,11 @@ const LocationMap = withScriptjs(
     let zoomDistance = distance => {
       switch (true) {
         case distance < 1:
-          return 15
+          return 14
         case distance < 5:
-          return 13.5
+          return 13
         case distance < 10:
-          return 12.5
+          return 11.5
         default:
           return 11
       }

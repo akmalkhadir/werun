@@ -42,7 +42,8 @@ const styles = theme => ({
   },
   input: {
     marginLeft: 8,
-    flex: 1
+    flex: 1,
+    minWidth: '80vw'
   },
   iconButton: {
     padding: 10
@@ -65,11 +66,11 @@ class LocationSearch extends Component {
   }
 
   handleChange = address => {
-    this.setState({ address })
-    this.setState(state => ({ menuOpen: !state.menuOpen }))
+    // this.setState({ address })
+    this.setState(state => ({ menuOpen: true, address }))
   }
 
-  handleSelect = address => {
+  handleSelect = (address) => {
     this.setState({ address })
     this.props.setAddress(address)
     geocodeByAddress(address)
@@ -134,6 +135,7 @@ class LocationSearch extends Component {
               anchorEl={this.anchorEl}
               transition
               disablePortal={false}
+              placement='bottom-start'
             >
               {({ TransitionProps, placement }) => (
                 <Grow
