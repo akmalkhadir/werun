@@ -142,7 +142,6 @@ class CreateRunForm extends Component {
                 required
                 id='name'
                 label='Name'
-                placeholder='Name your run'
                 value={this.state.name}
                 onChange={this.handleChange('name')}
                 margin='normal'
@@ -152,9 +151,9 @@ class CreateRunForm extends Component {
             </Grid>
             <Grid item>
               <TextField
+                required
                 id='description'
                 label='Description'
-                placeholder='bvfdjavbdvbdlkabvkdjbvdbdkv'
                 value={this.state.description}
                 onChange={this.handleChange('description')}
                 margin='normal'
@@ -168,6 +167,7 @@ class CreateRunForm extends Component {
             <Grid item>
               <MuiPickersUtilsProvider utils={DateFnsUtils}>
                 <DateTimePicker
+                  required
                   fullWidth
                   variant='filled'
                   label='Date'
@@ -180,6 +180,7 @@ class CreateRunForm extends Component {
 
             <Grid item>
               <LocationInput
+                required={true}
                 id='start'
                 label='Start Location'
                 value={this.state.start_location}
@@ -190,6 +191,7 @@ class CreateRunForm extends Component {
 
             <Grid item>
               <LocationInput
+                required={true}
                 id='end'
                 label='End Location'
                 value={this.state.end_location}
@@ -200,6 +202,7 @@ class CreateRunForm extends Component {
 
             <Grid item>
               <TextField
+                required
                 fullWidth
                 id='distance'
                 label='Distance'

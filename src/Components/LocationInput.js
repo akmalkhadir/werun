@@ -53,7 +53,7 @@ class LocationSearch extends Component {
 
   handleChange = address => {
     this.setState({ address })
-    this.setState(state => ({ menuOpen: !state.menuOpen }))
+    this.setState(state => ({ menuOpen: true }))
   }
 
   handleSelect = address => {
@@ -105,6 +105,7 @@ class LocationSearch extends Component {
               margin='normal'
               variant='filled'
               fullWidth
+              required={this.props.required}
             />
 
             <Popper
@@ -112,6 +113,8 @@ class LocationSearch extends Component {
               anchorEl={this.anchorEl}
               transition
               disablePortal={false}
+              placement = 'bottom-start'
+
             >
               {({ TransitionProps, placement }) => (
                 <Grow
