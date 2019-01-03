@@ -56,7 +56,7 @@ class RunCard extends Component {
             alt={run.name}
             className={classes.media}
             height='140'
-            image='https://handluggageonly.co.uk/wp-content/uploads/2015/08/hr2_TOMTER_1110_VU_3871.jpg'
+            image={run.image_url}
             title={run.name}
           />
           <CardContent>
