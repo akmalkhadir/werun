@@ -1,7 +1,8 @@
 .content_container {
   height: 100vh;
   padding: 56px 0 50px;
-  overflow: scroll
+  overflow-y: scroll;
+ -webkit-overflow-scrolling: touch;
 }
 
 /*
