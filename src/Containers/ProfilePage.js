@@ -15,7 +15,7 @@ import { DirectionsRun, LocationCity, Group } from '@material-ui/icons'
 const styles = theme => ({
   root: {
     borderRadius: 0,
-    height: '81vh',
+    minHeight: '80vh',
     margin: '10px'
   },
   actions: {
