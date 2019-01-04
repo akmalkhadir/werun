@@ -1,50 +1,31 @@
 import React, { Component } from 'react'
 import { withStyles } from '@material-ui/core/styles'
-import {
-  Grid,
-  Button,
-  Card,
-  CardActionArea,
-  CardMedia
-} from '@material-ui/core'
-import icon5k from '../images/icons-5k.svg'
-import icon10k from '../images/icons-10k.svg'
+import { Grid, Button, Zoom, Paper, Slide, Typography } from '@material-ui/core'
 
 import { Link } from 'react-router-dom'
 import LocationSearch from '../Components/LocationSearch'
+import { DirectionsRun } from '@material-ui/icons'
 
 const styles = theme => ({
-  button: {
-    justifyContent: 'space-around',
-    margin: theme.spacing.unit
-  },
   root: {
-    padding: '2px 4px',
     display: 'flex',
-    alignItems: 'center',
-    width: 'auto',
+    flexDirection: 'column',
+    margin: theme.spacing.unit * 2,
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  button: {
+    justifyContent: 'center',
     margin: theme.spacing.unit
   },
-  box: {
-    alignItems: 'center',
-    justifyContent: 'center'
+  icons: {
+    fontSize: '56px',
+    marginTop: '5vh'
   },
-  paper: {
-    width: '240px',
-    margin: theme.spacing.unit
-  },
-  input: {
-    marginLeft: 8,
-    flex: 1
-  },
-  iconButton: {
-    padding: 10
-  },
-  card: {
-    maxWidth: 170
-  },
-  media: {
-    height: '100%'
+  polygon: {
+    fill: theme.palette.common.white,
+    stroke: theme.palette.divider,
+    strokeWidth: 1
   }
 })
 
@@ -52,8 +33,9 @@ class SearchRunForm extends Component {
   state = {
     date: new Date(),
     address: '',
-    lat: 0,
-    lng: 0
+    lat: 51.520338,
+    lng: -0.087614,
+    enter: true
   }
 
   setCoordinates = (lat, lng) => {
@@ -68,7 +50,11 @@ class SearchRunForm extends Component {
     <Link
       to={{
         pathname: '/runs',
-        state: { lat: this.state.lat, lng: this.state.lng }
+        state: {
+          lat: this.state.lat,
+          lng: this.state.lng,
+          address: this.state.address
+        }
       }}
       {...props}
     />
@@ -77,61 +63,11 @@ class SearchRunForm extends Component {
   render () {
     const { classes } = this.props
     return (
-      <>
+      <div className={classes.root}>
         <LocationSearch
           setCoordinates={this.setCoordinates}
           setAddress={this.setAddress}
         />
-        <Grid className={classes.box} spacing={16} container>
-          <Grid item>
-            <Card className={classes.card}>
-              <CardActionArea>
-                <CardMedia
-                  component='img'
-                  className={classes.media}
-                  image={icon5k}
-                  title='5K'
-                />
-              </CardActionArea>
-            </Card>
-          </Grid>
-          <Grid item>
-            <Card className={classes.card}>
-              <CardActionArea>
-                <CardMedia
-                  component='img'
-                  className={classes.media}
-                  image={icon10k}
-                  title='10K'
-                />
-              </CardActionArea>
-            </Card>
-          </Grid>
-          <Grid item>
-            <Card className={classes.card}>
-              <CardActionArea>
-                <CardMedia
-                  component='img'
-                  className={classes.media}
-                  image={icon5k}
-                  title='5K'
-                />
-              </CardActionArea>
-            </Card>
-          </Grid>
-          <Grid item>
-            <Card className={classes.card}>
-              <CardActionArea>
-                <CardMedia
-                  component='img'
-                  className={classes.media}
-                  image={icon10k}
-                  title='10K'
-                />
-              </CardActionArea>
-            </Card>
-          </Grid>
-        </Grid>
         <Grid container className={classes.button}>
           <Grid item>
             <Button
@@ -144,7 +80,7 @@ class SearchRunForm extends Component {
             </Button>
           </Grid>
         </Grid>
-      </>
+      </div>
     )
   }
 }

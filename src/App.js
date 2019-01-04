@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import { CssBaseline } from '@material-ui/core'
 import { Switch, Route } from 'react-router-dom'
 import { isAfter, isBefore } from 'date-fns'
 
@@ -9,12 +8,13 @@ import RunDetails from './Components/RunDetails'
 
 import HomeTabs from './Containers/HomeTabs'
 import RunsPage from './Containers/RunsPage'
-import RunForm from './Containers/RunForm'
+import RunForm from './Containers/CreateRunForm'
 import SearchRunForm from './Containers/SearchRunForm'
 import API from './API'
 
 import './App.css'
-import RunDetailsWithMap from './Containers/RunDetailsWithMap'
+import ProfilePage from './Containers/ProfilePage'
+import LocationInput from './Components/LocationInput';
 
 class App extends Component {
   state = {
@@ -22,7 +22,7 @@ class App extends Component {
       upcomingRuns: [],
       pastRuns: []
     },
-    currentUserId: 3,
+    currentUserId: 21,
     allRuns: []
   }
 
@@ -56,14 +56,16 @@ class App extends Component {
   }
 
   getUpcomingRuns = () => {
-    return this.state.allRuns.filter(run => isAfter(new Date(run.date), new Date()))
+    return this.state.allRuns.filter(run =>
+      isAfter(new Date(run.date), new Date())
+    )
   }
 
   getPastRuns = () => {
-  return this.state.allRuns.filter(run =>
-    isBefore(new Date(run.date), new Date())
-  )
-}
+    return this.state.allRuns.filter(run =>
+      isBefore(new Date(run.date), new Date())
+    )
+  }
 
   render () {
     const { runnerDetails, allRuns, currentUserId } = this.state
@@ -72,13 +74,12 @@ class App extends Component {
 
     return (
       <>
-        <CssBaseline />
-        <TopBar position='fixed' />
+        <TopBar runner={runnerDetails} position='fixed' />
         <div className='content_container'>
           <Switch>
             <Route
               exact
-              path='/runners/:id'
+              path='/'
               render={props => (
                 <HomeTabs {...props} runnerDetails={runnerDetails} />
               )}
@@ -119,7 +120,18 @@ class App extends Component {
                 />
               )}
             />
-            <Route exact path='/test' component={RunDetailsWithMap} />
+            <Route
+              exact
+              path='/runners/:id'
+              render={props => (
+                <ProfilePage {...props} runner={runnerDetails} />
+              )}
+            />
+            <Route
+              exact
+              path='/testpage'
+              component={LocationInput}
+            />
           </Switch>
         </div>
         <BottomBar currentUserId={currentUserId} />

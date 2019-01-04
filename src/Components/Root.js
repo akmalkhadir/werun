@@ -3,6 +3,7 @@ import { Provider } from 'react-redux'
 import App from '../App'
 import { BrowserRouter as Router } from 'react-router-dom'
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles'
+import { CssBaseline } from '@material-ui/core';
 
 const theme = createMuiTheme({
   typography: {
@@ -23,6 +24,7 @@ const theme = createMuiTheme({
 const Root = ({ store }) => (
   <Provider store={store}>
     <MuiThemeProvider theme={theme}>
+      <CssBaseline />
       <Router>
         <App />
       </Router>

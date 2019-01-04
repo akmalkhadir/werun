@@ -6,7 +6,7 @@ class MapContainer extends Component {
     return (
       <LocationMap
         run={this.props.run}
-        googleMapURL={process.env.REACT_APP_MAPS_API}
+        googleMapURL={'https://blank.org/'}
         loadingElement={
           <div
             style={{

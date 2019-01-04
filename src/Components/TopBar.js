@@ -12,30 +12,32 @@ const styles = theme => ({
   }
 })
 
-const topBarTitle = () => {
+const topBarTitle = (runner) => {
   let currentUrl = window.location.pathname
   if (currentUrl.includes('/runners/')) {
-    return 'My Runs'
+    return runner.name
+  } else if (currentUrl === '/') {
+    return 'MY RUNS'
   } else if (currentUrl === '/runs') {
-    return 'Join A Run'
+    return 'JOIN A RUN'
   } else if (currentUrl === '/runs/new') {
-    return 'Host A Run'
+    return 'HOST A RUN'
   } else if (currentUrl === '/runs/search') {
-    return 'Join A Run'
+    return 'DISCOVER RUNS'
   } else if (currentUrl.includes('/runs/')) {
-    return 'Run Details'
+    return 'RUN DETAILS'
   } else {
     return 'WeRun'
   }
 }
 
 const TopBar = props => {
-  const { classes } = props
+  const { classes, runner } = props
   return (
     <AppBar className={classes.appBar}>
       <Toolbar className={classes.toolbar}>
         <Typography variant='h6' color='inherit'>
-          {topBarTitle()}
+          {topBarTitle(runner)}
         </Typography>
       </Toolbar>
     </AppBar>

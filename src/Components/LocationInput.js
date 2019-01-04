@@ -3,21 +3,18 @@
 import React, { Component } from 'react'
 import PlacesAutocomplete, {
   geocodeByAddress,
-  getLatLng,
+  getLatLng
 } from 'react-places-autocomplete'
 import {
   withStyles,
   Paper,
-  InputBase,
-  IconButton,
   MenuItem,
   ClickAwayListener,
   MenuList,
   Popper,
   Grow,
-  RootRef
+  TextField
 } from '@material-ui/core'
-import { LocationSearching } from '@material-ui/icons'
 
 const styles = theme => ({
   button: {
@@ -31,10 +28,6 @@ const styles = theme => ({
     width: 'auto',
     margin: theme.spacing.unit
   },
-  box: {
-    alignItems: 'center',
-    justifyContent: 'center'
-  },
   paper: {
     maxWidth: '90vw',
     marginRight: theme.spacing.unit * 2,
@@ -42,17 +35,10 @@ const styles = theme => ({
   },
   input: {
     marginLeft: 8,
-    flex: 1,
-    minWidth: '80vw'
+    flex: 1
   },
   iconButton: {
     padding: 10
-  },
-  card: {
-    maxWidth: 170
-  },
-  media: {
-    height: '100%'
   }
 })
 
@@ -66,11 +52,11 @@ class LocationSearch extends Component {
   }
 
   handleChange = address => {
-    // this.setState({ address })
-    this.setState(state => ({ menuOpen: true, address }))
+    this.setState({ address })
+    this.setState(state => ({ menuOpen: true }))
   }
 
-  handleSelect = (address) => {
+  handleSelect = address => {
     this.setState({ address })
     this.props.setAddress(address)
     geocodeByAddress(address)
@@ -110,32 +96,25 @@ class LocationSearch extends Component {
       >
         {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
           <>
-            <RootRef rootRef={React.createRef()}>
-              <Paper
-                className={classes.root}
-                elevation={1}
-              >
-                <InputBase
-                  {...getInputProps()}
-                  className={classes.input}
-                  value={this.state.address}
-                  placeholder='Search Upcoming Runs Near You'
-                  inputRef={node => {
-                    this.anchorEl = node
-                  }}
-                />
-                <IconButton className={classes.iconButton} aria-label='Search'>
-                  <LocationSearching />
-                </IconButton>
-              </Paper>
-            </RootRef>
+            <TextField
+              {...getInputProps()}
+              inputRef={node => {
+                this.anchorEl = node
+              }}
+              label={this.props.label}
+              margin='normal'
+              variant='filled'
+              fullWidth
+              required={this.props.required}
+            />
 
             <Popper
               open={menuOpen}
               anchorEl={this.anchorEl}
               transition
               disablePortal={false}
-              placement='bottom-start'
+              placement = 'bottom-start'
+
             >
               {({ TransitionProps, placement }) => (
                 <Grow

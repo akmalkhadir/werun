@@ -7,14 +7,12 @@ import {
   Button,
   Typography,
   Divider,
-  Grid,
-  IconButton
+  Grid
 } from '@material-ui/core'
 import {
   DirectionsRun,
   Event,
-  LocationOn,
-  Directions
+  LocationOn
 } from '@material-ui/icons'
 import Api from '../API'
 import MapContainer from '../Containers/MapContainer'
@@ -72,8 +70,6 @@ class RunDetails extends Component {
     }
   }
 
-  giveDirections
-
   render () {
     console.log('bello')
 
@@ -82,7 +78,7 @@ class RunDetails extends Component {
     const { run } = this.props.location.state
     const buttonLabel = this.state.runJoined ? 'UNJOIN' : 'JOIN'
 
-    const citymapperLink = 'https://citymapper.com/directions?endcoord=51.537060%2C-0.079179&endname=The%20Proud%20Archivist&endaddress=2-10%20Hertford%20Road%2C%20London%2C%20N1%205ET'
+    // const citymapperLink = 'https://citymapper.com/directions?endcoord=51.537060%2C-0.079179&endname=The%20Proud%20Archivist&endaddress=2-10%20Hertford%20Road%2C%20London%2C%20N1%205ET'
 
     const options = {
       weekday: 'long',
@@ -94,60 +90,55 @@ class RunDetails extends Component {
     }
     return (
       <>
-      <MapContainer run={run} />
-      <Card className={classes.root} elevation={0}>
-        <CardContent>
-          <CardActions className={classes.title}>
-            <Typography align='left' gutterBottom variant='h5' component='h2'>
-              {run.name}
-            </Typography>
-            <Typography component='p'>{run.description}</Typography>
+        <MapContainer run={run} />
+        <Card className={classes.root} elevation={0}>
+          <CardContent>
+            <CardActions className={classes.title}>
+              <Typography align='left' gutterBottom variant='h5' component='h2'>
+                {run.name}
+              </Typography>
+              <Typography component='p'>{run.description}</Typography>
+            </CardActions>
+            <CardActions>
+              <Grid container spacing={16} alignItems='center'>
+                <Grid item className={classes.actions}>
+                  <DirectionsRun />
+                  <Typography>{run.distance}K</Typography>
+                </Grid>
+                <Grid item className={classes.actions}>
+                  <Event />
+                  <Typography>
+                    {new Date(run.date).toLocaleDateString(undefined, options)}
+                  </Typography>
+                </Grid>
+              </Grid>
+            </CardActions>
+            <Divider />
+            <CardActions>
+              <Grid container spacing={16} alignItems='center'>
+                <Grid item className={classes.actions}>
+                  <LocationOn color='primary' />
+                  <Typography>{run.startLocation}</Typography>
+                </Grid>
+                <Grid item className={classes.actions}>
+                  <LocationOn color='secondary' />
+                  <Typography>{run.endLocation}</Typography>
+                </Grid>
+              </Grid>
+            </CardActions>
+          </CardContent>
+          <CardActions className={classes.button}>
+            {new Date(run.date) - new Date() > 0 ? (
+              <Button variant='contained' color='primary' onClick={handleClick}>
+                {buttonLabel}
+              </Button>
+            ) : (
+              <Button variant='contained' disabled color='primary'>
+                Event Has Ended
+              </Button>
+            )}
           </CardActions>
-          <CardActions>
-            <Grid container spacing={16} alignItems='center'>
-              <Grid item className={classes.actions}>
-                <DirectionsRun />
-                <Typography>{run.distance}K</Typography>
-              </Grid>
-              <Grid item className={classes.actions}>
-                <Event />
-                <Typography>
-                  {new Date(run.date).toLocaleDateString(undefined, options)}
-                </Typography>
-              </Grid>
-            </Grid>
-          </CardActions>
-          <Divider />
-          <CardActions>
-            <Grid container spacing={16} alignItems='center'>
-              <Grid item className={classes.actions}>
-                <LocationOn color='primary' />
-                <Typography>{run.startLocation}</Typography>
-              </Grid>
-              <Grid item className={classes.actions}>
-                <LocationOn color='secondary' />
-                <Typography>{run.endLocation}</Typography>
-              </Grid>
-              <Grid item>
-                <IconButton>
-                  <Directions />
-                </IconButton>
-              </Grid>
-            </Grid>
-          </CardActions>
-        </CardContent>
-        <CardActions className={classes.button}>
-          {new Date(run.date) - new Date() > 0 ? (
-            <Button variant='contained' color='primary' onClick={handleClick}>
-              {buttonLabel}
-            </Button>
-          ) : (
-            <Button variant='contained' disabled color='primary'>
-              Event Has Ended
-            </Button>
-          )}
-        </CardActions>
-      </Card>
+        </Card>
       </>
     )
   }

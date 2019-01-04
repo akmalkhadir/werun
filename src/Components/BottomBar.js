@@ -20,24 +20,25 @@ class BottomBar extends Component {
     value: 0
   }
 
-  handleChange = (event, value) => 
-    this.setState({ value })
-  
+  handleChange = (event, value) => this.setState({ value })
 
- redirectToRuns = (props) => {
-   const { currentUserId } =  this.props
-     return <Link to={`/runners/${currentUserId}`} {...props} />
- }
+  redirectToRuns = props => {
+    return <Link to={`/`} {...props} />
+  }
 
-  redirectToDiscover = (props) => {
+  redirectToDiscover = props => {
     return <Link to='/runs/search' {...props} />
   }
 
+  redirectToProfile = (props) => {
+    const { currentUserId } = this.props
+    return <Link to={`/runners/${currentUserId}`} {...props} />
+  }
 
   render () {
     const { classes } = this.props
-    const { value} = this.state
-    const { redirectToDiscover, redirectToRuns } = this
+    const { value } = this.state
+    const { redirectToDiscover, redirectToRuns, redirectToProfile } = this
 
     return (
       <BottomNavigation
@@ -46,9 +47,21 @@ class BottomBar extends Component {
         className={classes.root}
         showLabels
       >
-        <BottomNavigationAction component={redirectToRuns} label='My Runs' icon={<Event />} />
-        <BottomNavigationAction component={redirectToDiscover} label='Discover' icon={<Search />} />
-        <BottomNavigationAction label='Profile' icon={<Person />} />
+        <BottomNavigationAction
+          component={redirectToRuns}
+          label='My Runs'
+          icon={<Event />}
+        />
+        <BottomNavigationAction
+          component={redirectToDiscover}
+          label='Discover'
+          icon={<Search />}
+        />
+        <BottomNavigationAction
+          component={redirectToProfile}
+          label='Profile'
+          icon={<Person />}
+        />
       </BottomNavigation>
     )
   }
