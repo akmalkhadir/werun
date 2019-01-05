@@ -60,7 +60,6 @@ class RunsPage extends Component {
   // depending on coordinates set in state, filter this.props runs within 20k radius, then sort by ascending distance, then pass runs, to runs
 
   render () {
-    console.log('wello')
     const { runs, currentUserId } = this.props
     const runsToDisplay = (runs) => {
       switch (this.state.sortBy) {
