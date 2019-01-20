@@ -43,7 +43,6 @@ const LocationMap = withScriptjs(
 
     let markerMidpoint = midpoint(startPoint, endPoint)
     let markerMidpointCoord = getCoord(markerMidpoint)
-    console.log(markerDistance)
 
     const markers = [
       <LocationMarker key={`${id}-startPin`} location={startCoordinates} icon={startMarkerIcon} />,

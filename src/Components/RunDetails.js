@@ -71,7 +71,6 @@ class RunDetails extends Component {
   }
 
   render () {
-    console.log('bello')
 
     const { classes } = this.props
     const { handleClick } = this

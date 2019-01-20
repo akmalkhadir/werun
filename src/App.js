@@ -70,8 +70,6 @@ class App extends Component {
   render () {
     const { runnerDetails, allRuns, currentUserId } = this.state
 
-    console.log('hello')
-
     return (
       <>
         <TopBar runner={runnerDetails} position='fixed' />

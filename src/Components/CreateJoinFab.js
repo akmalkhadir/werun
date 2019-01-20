@@ -5,7 +5,7 @@ import { Add } from '@material-ui/icons'
 import { Link } from 'react-router-dom'
 
 const CreateLink = props => <Link to="/runs/new" {...props} />
-const JoinLink = props => <Link to='/runs' {...props} />
+const JoinLink = props => <Link to='/runs/search' {...props} />
 
 class CreateJoinFab extends React.Component {
   state = {
