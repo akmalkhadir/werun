@@ -1,10 +1,9 @@
 import React, { Component } from 'react'
 import { withStyles } from '@material-ui/core/styles'
-import { Grid, Button, Zoom, Paper, Slide, Typography } from '@material-ui/core'
+import { Grid, Button } from '@material-ui/core'
 
 import { Link } from 'react-router-dom'
 import LocationSearch from '../Components/LocationSearch'
-import { DirectionsRun } from '@material-ui/icons'
 
 const styles = theme => ({
   root: {

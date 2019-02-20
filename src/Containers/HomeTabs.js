@@ -75,7 +75,7 @@ class HomeTabs extends React.Component {
             onChange={this.handleChange}
             indicatorColor='primary'
             textColor='primary'
-            fullWidth
+            variant='fullWidth'
           >
             <Tab label='Upcoming' />
             <Tab label='Past' />

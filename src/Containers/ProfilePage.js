@@ -48,7 +48,6 @@ const styles = theme => ({
 class ProfilePage extends Component {
   render () {
     const { runner, classes } = this.props
-    console.log('mello')
     return (
       <>
         <Card className={classes.root} elevation={1}>
